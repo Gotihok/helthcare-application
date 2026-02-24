@@ -1,0 +1,38 @@
+tasks.register("buildBackend") {
+    dependsOn(":backend:build")
+}
+
+tasks.register("buildBackendNoTests") {
+    dependsOn(":backend:assemble")
+}
+
+tasks.register("devStart", Exec) {
+    group = "dev"
+    commandLine "docker", "compose", "start"
+}
+
+tasks.register("devTearDown", Exec) {
+    group = "dev"
+    commandLine "docker", "compose", "down", "--rmi", "local", "-v"
+}
+
+//TODO: rename properly
+tasks.register("devStop", Exec) {
+    group = "dev"
+    commandLine "docker", "compose", "down"
+}
+
+tasks.register("dockerUp", Exec) {
+    group = "dev"
+    commandLine "docker", "compose", "up", "-d", "--build"
+}
+
+tasks.register("devUp") {
+    group = "dev"
+    dependsOn("buildBackend", "dockerDown", "dockerUp")
+}
+
+tasks.register("devUpNoTests") {
+    group = "dev"
+    dependsOn("buildBackendNoTests", "devTearDown", "dockerUp")
+}
