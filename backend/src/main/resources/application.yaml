@@ -8,8 +8,8 @@ spring:
     password: ${postgres-password}
 
   jpa:
-      hibernate:
-        ddl-auto: none
+    hibernate:
+      ddl-auto: validate
 
 # Configuration for open-api docs
 springdoc:

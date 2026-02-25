@@ -1,9 +1,7 @@
-package com.wsei.healthcare.backend.user.rest.dto;
+package com.wsei.healthcare.backend.api.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Schema(description = "User registration request payload")
 public record UserRegisterRequest(

@@ -1,9 +1,5 @@
-package com.wsei.healthcare.backend.user.rest.contract;
+package com.wsei.healthcare.backend.api.auth;
 
-import com.wsei.healthcare.backend.user.rest.dto.JwtResponse;
-import com.wsei.healthcare.backend.user.rest.dto.UserLoginRequest;
-import com.wsei.healthcare.backend.user.rest.dto.UserLogoutRequest;
-import com.wsei.healthcare.backend.user.rest.dto.UserRegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
 // TODO: Add error response schema (TO ERRORS IN ENDPOINTS)
+// TODO: Rename User<dto> requests to be auth related
 @Tag(
         name = "Auth API",
         description = "Endpoints for user registration, authentication, and session management"

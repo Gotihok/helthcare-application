@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.user.rest.dto;
+package com.wsei.healthcare.backend.api.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

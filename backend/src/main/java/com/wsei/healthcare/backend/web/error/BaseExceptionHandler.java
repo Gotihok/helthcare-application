@@ -1,0 +1,28 @@
+package com.wsei.healthcare.backend.web.error;
+
+import com.wsei.healthcare.backend.api.error.AppErrorResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import java.time.Instant;
+
+public abstract class BaseExceptionHandler {
+
+    protected ResponseEntity<AppErrorResponse> buildResponse(
+            HttpStatus status,
+            String errorCode,
+            String message,
+            HttpServletRequest request
+    ) {
+        AppErrorResponse response = new AppErrorResponse(
+                Instant.now(),
+                status.value(),
+                errorCode,
+                message,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(response);
+    }
+}
