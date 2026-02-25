@@ -1,6 +1,7 @@
 package com.wsei.healthcare.backend.infra.security;
 
 import com.wsei.healthcare.backend.infra.token.JwtTokenService;
+import com.wsei.healthcare.backend.infra.token.TokenRevocationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenService tokenService;
+    private final TokenRevocationService tokenRevocationService;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -36,12 +38,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 request.getHeader("Authorization")
         );
 
-        if (token == null) {
+        if (token == null || tokenRevocationService.isLoggedOut(token)) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        //TODO: add checking blacklisted jwt (logout)
 
         if (tokenService.isValid(token)) {
             String username = tokenService.getUsername(token);

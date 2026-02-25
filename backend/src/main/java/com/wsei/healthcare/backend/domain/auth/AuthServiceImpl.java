@@ -7,6 +7,7 @@ import com.wsei.healthcare.backend.api.auth.UserLoginRequest;
 import com.wsei.healthcare.backend.api.auth.UserLogoutRequest;
 import com.wsei.healthcare.backend.api.auth.UserRegisterRequest;
 import com.wsei.healthcare.backend.domain.user.UserService;
+import com.wsei.healthcare.backend.infra.token.TokenRevocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserService userService;
-    private final JwtTokenService tokenService;
+    private final JwtTokenService jwtTokenService;
+    private final TokenRevocationService tokenRevocationService;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -39,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        JwtWithExpiration jwt = tokenService.generateToken(authentication.getName());
+        JwtWithExpiration jwt = jwtTokenService.generateToken(authentication.getName());
         return new JwtResponse(
                 jwt.jwt(),
                 jwt.expiresAt()
@@ -48,6 +50,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void logout(UserLogoutRequest logoutRequest) {
-        //TODO: add token to invalid ones
+        if (jwtTokenService.isValid(logoutRequest.jwt())) {
+            tokenRevocationService.registerLoggedOut(logoutRequest.jwt());
+        }
     }
 }
