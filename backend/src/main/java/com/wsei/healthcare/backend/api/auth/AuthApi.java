@@ -35,10 +35,10 @@ public interface AuthApi {
                     description = "User register credentials",
                     required = true,
                     content = @Content(
-                            schema = @Schema(implementation = UserRegisterRequest.class)
+                            schema = @Schema(implementation = RegisterRequest.class)
                     )
             )
-            UserRegisterRequest request
+            RegisterRequest request
     );
 
     // ------------------------------------------------------------
@@ -61,14 +61,15 @@ public interface AuthApi {
                     description = "User login credentials",
                     required = true,
                     content = @Content(
-                            schema = @Schema(implementation = UserLoginRequest.class)
+                            schema = @Schema(implementation = LoginRequest.class)
                     )
             )
-            UserLoginRequest request
+            LoginRequest request
     );
 
     // ------------------------------------------------------------
 
+    //TODO: change to be working with a header
     @Operation(summary = "Logout user")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "User successfully logged out"),
@@ -79,9 +80,9 @@ public interface AuthApi {
                     description = "Logout request payload",
                     required = true,
                     content = @Content(
-                            schema = @Schema(implementation = UserLogoutRequest.class)
+                            schema = @Schema(implementation = LogoutRequest.class)
                     )
             )
-            UserLogoutRequest request
+            LogoutRequest request
     );
 }

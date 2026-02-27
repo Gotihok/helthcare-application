@@ -3,8 +3,8 @@ package com.wsei.healthcare.backend.api.auth;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
-@Schema(description = "User registration request payload")
-public record UserRegisterRequest(
+@Schema(description = "Registration request payload")
+public record RegisterRequest(
 
         @NotBlank
 //        @Size(min = 2, max = 50)

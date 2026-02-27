@@ -1,14 +1,14 @@
 package com.wsei.healthcare.backend.domain.auth;
 
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
-import com.wsei.healthcare.backend.api.auth.UserLoginRequest;
-import com.wsei.healthcare.backend.api.auth.UserLogoutRequest;
-import com.wsei.healthcare.backend.api.auth.UserRegisterRequest;
+import com.wsei.healthcare.backend.api.auth.LoginRequest;
+import com.wsei.healthcare.backend.api.auth.LogoutRequest;
+import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 
 public interface AuthService {
-    JwtResponse register(UserRegisterRequest registerRequest);
+    JwtResponse register(RegisterRequest registerRequest);
 
-    JwtResponse login(UserLoginRequest loginRequest);
+    JwtResponse login(LoginRequest loginRequest);
 
-    void logout(UserLogoutRequest logoutRequest);
+    void logout(LogoutRequest logoutRequest);
 }

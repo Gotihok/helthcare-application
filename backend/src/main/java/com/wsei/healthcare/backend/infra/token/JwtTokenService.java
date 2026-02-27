@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -33,18 +34,19 @@ public class JwtTokenService {
         this.type = type;
     }
 
-    public JwtWithExpiration generateToken(@NotBlank String name) {
+    public JwtToken generateToken(@NotBlank String name) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(jwtExpirationSeconds);
 
         String jwt = Jwts.builder()
+                .claim("jti", UUID.randomUUID().toString())
                 .subject(name)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(expiration))
                 .signWith(key)
                 .compact();
 
-        return new JwtWithExpiration(jwt, expiration);
+        return new JwtToken(jwt, expiration);
     }
 
     public boolean isValid(@NotBlank String token) {
@@ -65,10 +67,6 @@ public class JwtTokenService {
 
     public String getUsername(@NotBlank String token) {
         return parseClaims(token).getSubject();
-    }
-
-    public Instant getExpiration(@NotBlank String token) {
-        return parseClaims(token).getExpiration().toInstant();
     }
 
     private Claims parseClaims(String token) {

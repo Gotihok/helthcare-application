@@ -1,11 +1,11 @@
 package com.wsei.healthcare.backend.domain.auth;
 
 import com.wsei.healthcare.backend.infra.token.JwtTokenService;
-import com.wsei.healthcare.backend.infra.token.JwtWithExpiration;
+import com.wsei.healthcare.backend.infra.token.JwtToken;
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
-import com.wsei.healthcare.backend.api.auth.UserLoginRequest;
-import com.wsei.healthcare.backend.api.auth.UserLogoutRequest;
-import com.wsei.healthcare.backend.api.auth.UserRegisterRequest;
+import com.wsei.healthcare.backend.api.auth.LoginRequest;
+import com.wsei.healthcare.backend.api.auth.LogoutRequest;
+import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.domain.user.UserService;
 import com.wsei.healthcare.backend.infra.token.TokenRevocationService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public JwtResponse register(UserRegisterRequest registerRequest) {
+    public JwtResponse register(RegisterRequest registerRequest) {
         userService.createUser(registerRequest);
         return authenticateAndBuildTokenResponse(registerRequest.email(), registerRequest.password());
     }
 
     @Override
-    public JwtResponse login(UserLoginRequest loginRequest) {
+    public JwtResponse login(LoginRequest loginRequest) {
         return authenticateAndBuildTokenResponse(loginRequest.email(), loginRequest.password());
     }
 
@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        JwtWithExpiration jwt = jwtTokenService.generateToken(authentication.getName());
+        JwtToken jwt = jwtTokenService.generateToken(authentication.getName());
         return new JwtResponse(
                 jwt.jwt(),
                 jwt.expiresAt()
@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void logout(UserLogoutRequest logoutRequest) {
+    public void logout(LogoutRequest logoutRequest) {
         if (jwtTokenService.isValid(logoutRequest.jwt())) {
             tokenRevocationService.registerLoggedOut(logoutRequest.jwt());
         }

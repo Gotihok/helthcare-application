@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.domain.user;
 
-import com.wsei.healthcare.backend.api.auth.UserRegisterRequest;
+import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public AppUser createUser(UserRegisterRequest registerRequest) {
+    public void createUser(RegisterRequest registerRequest) {
         AppUser appUser = userMapper.toEntity(registerRequest);
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-        return userRepository.save(appUser);
+        userRepository.save(appUser);
     }
 }

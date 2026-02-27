@@ -3,9 +3,9 @@ package com.wsei.healthcare.backend.web.auth;
 import com.wsei.healthcare.backend.domain.auth.AuthService;
 import com.wsei.healthcare.backend.api.auth.AuthApi;
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
-import com.wsei.healthcare.backend.api.auth.UserLoginRequest;
-import com.wsei.healthcare.backend.api.auth.UserLogoutRequest;
-import com.wsei.healthcare.backend.api.auth.UserRegisterRequest;
+import com.wsei.healthcare.backend.api.auth.LoginRequest;
+import com.wsei.healthcare.backend.api.auth.LogoutRequest;
+import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class AuthController implements AuthApi {
             value = "/register",
             produces = "application/json"
     )
-    public ResponseEntity<JwtResponse> register(@RequestBody @Valid UserRegisterRequest request) {
+    public ResponseEntity<JwtResponse> register(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
@@ -37,7 +37,7 @@ public class AuthController implements AuthApi {
             value = "/login",
             produces = "application/json"
     )
-    public ResponseEntity<JwtResponse> login(@RequestBody UserLoginRequest request) {
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
@@ -46,8 +46,8 @@ public class AuthController implements AuthApi {
             value = "/logout",
             produces = "application/json"
     )
-    public ResponseEntity<Void> logout(@RequestBody UserLogoutRequest request) {
+    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request) {
         authService.logout(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
