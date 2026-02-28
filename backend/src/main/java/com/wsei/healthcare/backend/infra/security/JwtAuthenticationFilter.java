@@ -27,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final TokenRevocationService tokenRevocationService;
     private final UserDetailsService userDetailsService;
 
+    //TODO: add the exceptions with authEP and ADHandler exceptions if needed
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

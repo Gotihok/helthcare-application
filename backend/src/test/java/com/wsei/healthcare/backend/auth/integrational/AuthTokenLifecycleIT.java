@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.inetgrational.auth;
+package com.wsei.healthcare.backend.auth.integrational;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
-public class AuthFlowIT {
+public class AuthTokenLifecycleIT {
 
     @RestController
     static class TestController {
@@ -58,7 +58,7 @@ public class AuthFlowIT {
     ObjectMapper objectMapper;
 
     @Test
-    void authFullFlowTest() throws Exception {
+    void tokenLifecycleTest() throws Exception {
 
         // 1. Access protected endpoint without a token
         mockMvc.perform(get("/api/test"))
