@@ -7,7 +7,7 @@ import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.token.JwtTokenService;
 import com.wsei.healthcare.backend.application.token.TokenRevocationService;
 import com.wsei.healthcare.backend.application.user.UserService;
-import com.wsei.healthcare.backend.domain.token.Jwt;
+import com.wsei.healthcare.backend.infra.security.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.domain.token;
+package com.wsei.healthcare.backend.infra.security;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

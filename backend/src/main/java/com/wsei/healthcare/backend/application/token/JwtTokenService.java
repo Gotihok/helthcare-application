@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.application.token;
 
-import com.wsei.healthcare.backend.domain.token.Jwt;
+import com.wsei.healthcare.backend.infra.security.Jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
