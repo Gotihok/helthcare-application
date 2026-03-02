@@ -36,7 +36,7 @@ public class LogoutIT extends AbstractAuthIT {
     void logout_shouldReturnUnauthorized_whenJwtIsUnauthenticated() throws Exception {
         performLogout(
                 LogoutRequestBuilder.getNoTokenDefault()
-                        .setJwt(AuthConstants.JWT_STUB)
+                        .setJwt(AuthConstants.JWT_TOKEN_STUB)
                         .build()
         ).andExpect(status().isNoContent());
     }

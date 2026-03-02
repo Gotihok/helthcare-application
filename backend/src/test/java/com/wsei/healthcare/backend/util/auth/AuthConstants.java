@@ -23,6 +23,6 @@ public interface AuthConstants {
     String INVALID_EMAIL = "";
     String INVALID_PASSWORD = "";
 
-    String JWT_STUB = "some.jwt.stub";
+    String JWT_TOKEN_STUB = "some.jwt.stub";
     Instant JWT_EXPIRATION_STUB = Instant.now().plusSeconds(3600);
 }

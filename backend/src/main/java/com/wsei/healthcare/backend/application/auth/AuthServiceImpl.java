@@ -53,5 +53,6 @@ public class AuthServiceImpl implements AuthService {
         if (jwtTokenService.isValid(logoutRequest.jwt())) {
             tokenRevocationService.registerLoggedOut(logoutRequest.jwt());
         }
+        //TODO: throw some exception to map to unauthorized in api response
     }
 }
