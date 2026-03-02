@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.auth.builder;
+package com.wsei.healthcare.backend.util.auth;
 
 import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Setter
 @Accessors(chain = true)
-public class LogoutRequestBuilder implements AuthDefaults {
+public class LogoutRequestBuilder implements AuthConstants {
 
     private String jwt;
 

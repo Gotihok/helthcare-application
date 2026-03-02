@@ -23,4 +23,4 @@ logging:
     console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
   level:
     root: info
-    com.bhnatiuk.uni.bookstore: info
+    com.wsei.healthcare: info

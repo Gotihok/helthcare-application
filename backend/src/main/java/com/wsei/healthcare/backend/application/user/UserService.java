@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.domain.user;
+package com.wsei.healthcare.backend.application.user;
 
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 

@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.domain.auth;
+package com.wsei.healthcare.backend.application.auth;
 
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;

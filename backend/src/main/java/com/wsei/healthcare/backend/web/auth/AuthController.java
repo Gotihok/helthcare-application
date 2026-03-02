@@ -1,11 +1,7 @@
 package com.wsei.healthcare.backend.web.auth;
 
-import com.wsei.healthcare.backend.domain.auth.AuthService;
-import com.wsei.healthcare.backend.api.auth.AuthApi;
-import com.wsei.healthcare.backend.api.auth.JwtResponse;
-import com.wsei.healthcare.backend.api.auth.LoginRequest;
-import com.wsei.healthcare.backend.api.auth.LogoutRequest;
-import com.wsei.healthcare.backend.api.auth.RegisterRequest;
+import com.wsei.healthcare.backend.api.auth.*;
+import com.wsei.healthcare.backend.application.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//TODO: make error dto for every error http response
-//      !!! ESPECIALLY FOR JAKARTA VALIDATION !!!
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor

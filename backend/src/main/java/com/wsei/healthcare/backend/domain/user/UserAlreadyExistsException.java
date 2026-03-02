@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.domain.auth;
+package com.wsei.healthcare.backend.domain.user;
 
 import com.wsei.healthcare.backend.infra.common.exception.AlreadyExistsException;
 import org.springframework.http.HttpStatus;

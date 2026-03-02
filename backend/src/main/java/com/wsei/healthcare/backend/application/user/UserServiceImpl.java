@@ -1,6 +1,9 @@
-package com.wsei.healthcare.backend.domain.user;
+package com.wsei.healthcare.backend.application.user;
 
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
+import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserMapper;
+import com.wsei.healthcare.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

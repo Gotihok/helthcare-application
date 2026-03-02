@@ -2,6 +2,7 @@ package com.wsei.healthcare.backend.domain.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,9 +12,11 @@ import java.util.Collection;
 import java.util.List;
 
 //TODO: model proper info
+//TODO: maybe extract principal to a separate class (reduce coupling)
 @Entity
 @Table(name = "users")
 @Data
+@Accessors(chain = true)
 public class AppUser implements UserDetails {
 
     @Id

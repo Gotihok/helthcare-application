@@ -1,5 +1,6 @@
-package com.wsei.healthcare.backend.infra.token;
+package com.wsei.healthcare.backend.application.token;
 
+import com.wsei.healthcare.backend.domain.token.Jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -34,7 +35,7 @@ public class JwtTokenService {
         this.type = type;
     }
 
-    public JwtToken generateToken(@NotBlank String name) {
+    public Jwt generateToken(@NotBlank String name) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(jwtExpirationSeconds);
 
@@ -46,7 +47,9 @@ public class JwtTokenService {
                 .signWith(key)
                 .compact();
 
-        return new JwtToken(jwt, expiration);
+        return new Jwt()
+                .setJwt(jwt)
+                .setExpiresAt(expiration);
     }
 
     public boolean isValid(@NotBlank String token) {

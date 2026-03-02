@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.shared.integrational;
+package com.wsei.healthcare.backend.shared.integration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +15,29 @@ import tools.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @Testcontainers
 public abstract class AbstractIntegrationalTest {
+    // --- Singleton Postgres Container ---
+    public static class SingletonPostgresContainer extends PostgreSQLContainer {
+        private static final SingletonPostgresContainer INSTANCE = new SingletonPostgresContainer();
+
+        private SingletonPostgresContainer() {
+            super("postgres:18");
+            withDatabaseName("test");
+            withUsername("test");
+            withPassword("test");
+        }
+
+        public static SingletonPostgresContainer getInstance() {
+            return INSTANCE;
+        }
+
+        @Override
+        public void stop() {
+            // Do nothing, let the JVM exit stop the container
+        }
+    }
 
     @Container
-    static PostgreSQLContainer postgres =
-            new PostgreSQLContainer("postgres:18")
-                    .withUsername("test")
-                    .withPassword("test")
-                    .withDatabaseName("test");
+    static PostgreSQLContainer postgres = SingletonPostgresContainer.getInstance();
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {

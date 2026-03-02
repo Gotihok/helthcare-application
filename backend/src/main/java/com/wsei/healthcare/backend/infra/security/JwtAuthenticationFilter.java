@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.infra.security;
 
-import com.wsei.healthcare.backend.infra.token.JwtTokenService;
-import com.wsei.healthcare.backend.infra.token.TokenRevocationService;
+import com.wsei.healthcare.backend.application.token.JwtTokenService;
+import com.wsei.healthcare.backend.application.token.TokenRevocationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

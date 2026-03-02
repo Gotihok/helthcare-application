@@ -1,13 +1,13 @@
-package com.wsei.healthcare.backend.domain.auth;
+package com.wsei.healthcare.backend.application.auth;
 
-import com.wsei.healthcare.backend.infra.token.JwtTokenService;
-import com.wsei.healthcare.backend.infra.token.JwtToken;
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
 import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
-import com.wsei.healthcare.backend.domain.user.UserService;
-import com.wsei.healthcare.backend.infra.token.TokenRevocationService;
+import com.wsei.healthcare.backend.application.token.JwtTokenService;
+import com.wsei.healthcare.backend.application.token.TokenRevocationService;
+import com.wsei.healthcare.backend.application.user.UserService;
+import com.wsei.healthcare.backend.domain.token.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,10 +41,10 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        JwtToken jwt = jwtTokenService.generateToken(authentication.getName());
+        Jwt jwt = jwtTokenService.generateToken(authentication.getName());
         return new JwtResponse(
-                jwt.jwt(),
-                jwt.expiresAt()
+                jwt.getJwt(),
+                jwt.getExpiresAt()
         );
     }
 

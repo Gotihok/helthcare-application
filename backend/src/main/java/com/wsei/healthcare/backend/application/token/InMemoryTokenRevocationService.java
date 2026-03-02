@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.infra.token;
+package com.wsei.healthcare.backend.application.token;
 
 import org.springframework.stereotype.Service;
 
