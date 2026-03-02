@@ -8,6 +8,8 @@ public class UserMapper {
     public AppUser toEntity(RegisterRequest registerRequest) {
         return new AppUser()
                 .setEmail(registerRequest.email())
-                .setPassword(registerRequest.password());
+                .setPassword(registerRequest.password())
+                .setEnabled(true)
+                .setAccountNonLocked(true);
     }
 }

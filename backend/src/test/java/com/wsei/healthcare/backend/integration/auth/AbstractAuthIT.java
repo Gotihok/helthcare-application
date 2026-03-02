@@ -3,13 +3,13 @@ package com.wsei.healthcare.backend.integration.auth;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
 import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
+import com.wsei.healthcare.backend.application.user.UserService;
+import com.wsei.healthcare.backend.domain.user.UserMapper;
 import com.wsei.healthcare.backend.domain.user.UserRepository;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
-import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.LogoutRequestBuilder;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,11 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected UserService userService;
+
     @Transactional
-    @BeforeEach
+    @AfterEach
     void cleanDatabase() {
         userRepository.deleteAll();
     }
@@ -67,24 +70,13 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
                 .content(objectMapper.writeValueAsString(request)));
     }
 
-    //TODO: make to be working with request (extract building out)
-    protected ResultActions performLogin(String email, String password) throws Exception {
-        LoginRequest request = LoginRequestBuilder.getValidDefault()
-                .setEmail(email)
-                .setPassword(password)
-                .build();
-
+    protected ResultActions performLogin(LoginRequest request) throws Exception {
         return mockMvc.perform(post(LOGIN_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
     }
 
-    //TODO: make to be working with request (extract building out)
-    protected ResultActions performLogout(String token) throws Exception {
-        LogoutRequest request = LogoutRequestBuilder.getEmptyDefault()
-                .setJwt(token)
-                .build();
-
+    protected ResultActions performLogout(LogoutRequest request) throws Exception {
         return mockMvc.perform(post(LOGOUT_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)));

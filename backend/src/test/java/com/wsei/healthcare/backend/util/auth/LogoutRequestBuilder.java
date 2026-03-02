@@ -12,7 +12,7 @@ public class LogoutRequestBuilder implements AuthConstants {
 
     private LogoutRequestBuilder() {}
 
-    public static LogoutRequestBuilder getEmptyDefault() {
+    public static LogoutRequestBuilder getNoTokenDefault() {
         return new LogoutRequestBuilder();
     }
 

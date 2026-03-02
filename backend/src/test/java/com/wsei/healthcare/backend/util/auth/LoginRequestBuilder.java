@@ -20,6 +20,13 @@ public class LoginRequestBuilder implements AuthConstants {
         return builder;
     }
 
+    public static LoginRequestBuilder getInvalidDefault() {
+        LoginRequestBuilder builder = new LoginRequestBuilder();
+        builder.email = INVALID_EMAIL;
+        builder.password = INVALID_PASSWORD;
+        return builder;
+    }
+
     public LoginRequest build() {
         return new LoginRequest(email, password);
     }
