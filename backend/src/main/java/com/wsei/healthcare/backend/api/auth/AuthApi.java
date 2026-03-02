@@ -53,6 +53,7 @@ public interface AuthApi {
                             schema = @Schema(implementation = JwtResponse.class)
                     )
             ),
+            @ApiResponse(responseCode = "400", description = "Invalid login data (validation error)"),
             @ApiResponse(responseCode = "401", description = "Invalid credentials"),
             @ApiResponse(responseCode = "403", description = "User account is disabled or locked")
     })
