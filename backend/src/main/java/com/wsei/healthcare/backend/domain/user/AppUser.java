@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 //TODO: model proper info
-//TODO: maybe extract principal to a separate class (reduce coupling)
+//TODO: extract principal(UserDetails) to a separate class (separate domain model for auth) (reduce coupling)
 @Entity
 @Table(name = "users")
 @Data
@@ -28,6 +28,12 @@ public class AppUser implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private boolean enabled = true;
+
+    @Column(nullable = false)
+    private boolean accountNonLocked = true;
 
     @Override
     public @NullMarked Collection<? extends GrantedAuthority> getAuthorities() {
@@ -45,22 +51,22 @@ public class AppUser implements UserDetails {
     }
 
     @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
     }
 }
