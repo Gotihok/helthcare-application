@@ -11,12 +11,6 @@ tasks.register("devStart", Exec) {
     commandLine "docker", "compose", "start"
 }
 
-tasks.register("devTearDown", Exec) {
-    group = "dev"
-    commandLine "docker", "compose", "down", "--rmi", "local", "-v"
-}
-
-//TODO: rename properly
 tasks.register("devStop", Exec) {
     group = "dev"
     commandLine "docker", "compose", "down"
@@ -27,11 +21,25 @@ tasks.register("dockerUp", Exec) {
     commandLine "docker", "compose", "up", "-d", "--build"
 }
 
+// Example of usage in cmd:
+//  ./gradlew devUp
+
+// Use to shut down local dev server
+// NOTE: completely erases previous context
+tasks.register("devTearDown", Exec) {
+    group = "dev"
+    commandLine "docker", "compose", "down", "--rmi", "local", "-v"
+}
+
+// Use to run or restart the dev server
+// NOTE: completely erases previous context
 tasks.register("devUp") {
     group = "dev"
     dependsOn("buildBackend", "devTearDown", "dockerUp")
 }
 
+// Use to run or restart the dev server without tests
+// NOTE: completely erases previous context
 tasks.register("devUpNoTests") {
     group = "dev"
     dependsOn("buildBackendNoTests", "devTearDown", "dockerUp")
