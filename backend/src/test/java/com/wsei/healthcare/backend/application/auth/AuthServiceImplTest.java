@@ -6,6 +6,7 @@ import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.token.JwtTokenService;
 import com.wsei.healthcare.backend.application.token.TokenRevocationService;
+import com.wsei.healthcare.backend.application.user.CreateUserCommand;
 import com.wsei.healthcare.backend.application.user.UserService;
 import com.wsei.healthcare.backend.infra.security.Jwt;
 import com.wsei.healthcare.backend.util.auth.*;
@@ -39,6 +40,9 @@ class AuthServiceImplTest implements AuthConstants {
     @Mock
     private AuthenticationManager authenticationManager;
 
+    @Mock
+    private AuthMapper authMapper;
+
     @InjectMocks
     private AuthServiceImpl authService;
 
@@ -48,6 +52,7 @@ class AuthServiceImplTest implements AuthConstants {
     void register_shouldCreateUserAndReturnJwt_whenValidRequest() {
         // given
         RegisterRequest request = RegisterRequestBuilder.getValidDefault().build();
+        CreateUserCommand createUserCommand = authMapper.toCreateUserCommand(request);
         Jwt jwtStub = new Jwt()
                 .setJwt(JWT_TOKEN_STUB)
                 .setExpiresAt(JWT_EXPIRATION_STUB);
@@ -69,7 +74,7 @@ class AuthServiceImplTest implements AuthConstants {
         JwtResponse actualResponse = authService.register(request);
 
         // then
-        verify(userService).createUser(request);
+        verify(userService).createUser(eq(createUserCommand));
         verify(authenticationManager).authenticate(any());
         verify(jwtTokenService).generateToken(authentication.getName());
 
@@ -80,8 +85,9 @@ class AuthServiceImplTest implements AuthConstants {
     void register_shouldPropagateExceptionAndNotAuthenticate_whenUserCreationFails() {
         // given
         RegisterRequest request = RegisterRequestBuilder.getValidDefault().build();
+        CreateUserCommand createUserCommand = authMapper.toCreateUserCommand(request);
         doThrow(new RuntimeException())
-                .when(userService).createUser(request);
+                .when(userService).createUser(eq(createUserCommand));
 
         // when
         assertThrows(
@@ -90,7 +96,7 @@ class AuthServiceImplTest implements AuthConstants {
         );
 
         // then
-        verify(userService).createUser(request);
+        verify(userService).createUser(any());
         verify(authenticationManager, never()).authenticate(any());
         verify(jwtTokenService, never()).generateToken(any());
     }

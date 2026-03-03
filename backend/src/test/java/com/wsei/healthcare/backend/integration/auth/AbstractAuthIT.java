@@ -3,11 +3,12 @@ package com.wsei.healthcare.backend.integration.auth;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
 import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
+import com.wsei.healthcare.backend.application.auth.AuthMapper;
 import com.wsei.healthcare.backend.application.user.UserService;
-import com.wsei.healthcare.backend.domain.user.UserMapper;
 import com.wsei.healthcare.backend.domain.user.UserRepository;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
+import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
 
     @Autowired
     protected UserService userService;
+
+    @Autowired
+    protected AuthMapper authMapper;
 
     @Transactional
     @AfterEach
@@ -80,5 +84,14 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
         return mockMvc.perform(post(LOGOUT_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)));
+    }
+
+    // Create user
+    protected void createDefaultUser() {
+        userService.createUser(
+                authMapper.toCreateUserCommand(
+                        RegisterRequestBuilder.getValidDefault().build()
+                )
+        );
     }
 }

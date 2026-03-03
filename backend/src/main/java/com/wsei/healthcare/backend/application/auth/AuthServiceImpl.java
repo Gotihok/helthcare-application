@@ -21,10 +21,13 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenService jwtTokenService;
     private final TokenRevocationService tokenRevocationService;
     private final AuthenticationManager authenticationManager;
+    private final AuthMapper authMapper;
 
     @Override
     public JwtResponse register(RegisterRequest registerRequest) {
-        userService.createUser(registerRequest);
+        userService.createUser(
+                authMapper.toCreateUserCommand(registerRequest)
+        );
         return authenticateAndBuildTokenResponse(registerRequest.email(), registerRequest.password());
     }
 

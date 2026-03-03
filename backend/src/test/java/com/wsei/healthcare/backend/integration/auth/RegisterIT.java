@@ -24,7 +24,7 @@ public class RegisterIT extends AbstractAuthIT {
 
     @Test
     void register_shouldReturnConflict_whenUserAlreadyExists() throws Exception {
-        userService.createUser(RegisterRequestBuilder.getValidDefault().build());
+        createDefaultUser();
 
         performRegister(RegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isConflict());

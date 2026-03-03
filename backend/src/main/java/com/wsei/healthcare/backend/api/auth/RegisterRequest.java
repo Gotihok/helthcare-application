@@ -3,6 +3,7 @@ package com.wsei.healthcare.backend.api.auth;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+//TODO: test
 @Schema(description = "Registration request payload")
 public record RegisterRequest(
 

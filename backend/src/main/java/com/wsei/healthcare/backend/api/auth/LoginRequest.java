@@ -2,6 +2,7 @@ package com.wsei.healthcare.backend.api.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+//TODO: test
 @Schema(description = "Login request payload")
 public record LoginRequest(
         @Schema(

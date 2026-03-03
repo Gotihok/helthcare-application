@@ -3,7 +3,6 @@ package com.wsei.healthcare.backend.integration.auth;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
 import com.wsei.healthcare.backend.util.auth.LogoutRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,7 +13,7 @@ public class LogoutIT extends AbstractAuthIT {
     @Test
     void logout_shouldUnauthorize_whenAuthorizedJwt() throws Exception {
         // User creation
-        userService.createUser(RegisterRequestBuilder.getValidDefault().build());
+        createDefaultUser();
 
         // Login
         String jwt = getToken(

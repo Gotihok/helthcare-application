@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.infra.common.exception;
+package com.wsei.healthcare.backend.application.common.exception;
 
 import org.springframework.http.HttpStatus;
 
