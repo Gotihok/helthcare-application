@@ -1,4 +1,12 @@
 package com.wsei.healthcare.backend.api.patient;
 
-public record PatientProfileDetailsUpdateRequest() {
+import java.time.LocalDate;
+
+public record PatientProfileDetailsUpdateRequest(
+        String firstName,
+        String lastName,
+//        String email,
+        String phoneNumber,
+        LocalDate dateOfBirth
+) {
 }

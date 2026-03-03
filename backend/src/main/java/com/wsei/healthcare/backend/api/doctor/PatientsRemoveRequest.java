@@ -1,4 +1,8 @@
 package com.wsei.healthcare.backend.api.doctor;
 
-public record PatientsRemoveRequest() {
+import java.util.List;
+
+public record PatientsRemoveRequest(
+        List<Long> patientIds
+) {
 }
