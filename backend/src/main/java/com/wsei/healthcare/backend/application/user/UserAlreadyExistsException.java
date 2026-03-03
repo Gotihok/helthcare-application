@@ -1,9 +1,9 @@
 package com.wsei.healthcare.backend.application.user;
 
-import com.wsei.healthcare.backend.application.common.exception.ApplicationException;
+import com.wsei.healthcare.backend.application.common.exception.AlreadyExistsException;
 import org.springframework.http.HttpStatus;
 
-public class UserAlreadyExistsException extends ApplicationException {
+public class UserAlreadyExistsException extends AlreadyExistsException {
     public UserAlreadyExistsException(String message) {
         super(message);
     }

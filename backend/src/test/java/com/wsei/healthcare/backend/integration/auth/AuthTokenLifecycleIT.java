@@ -1,7 +1,6 @@
 package com.wsei.healthcare.backend.integration.auth;
 
 import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.LogoutRequestBuilder;
 import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +24,8 @@ public class AuthTokenLifecycleIT extends AbstractAuthIT {
         shouldAuthorize(token);
 
         // 4. Logout
-        performLogout(
-                LogoutRequestBuilder.getNoTokenDefault()
-                        .setJwt(token).build()
-        ).andExpect(status().isNoContent());
+        performLogout(token)
+                .andExpect(status().isNoContent());
 
         // 5. Old token must be rejected
         shouldReject(token);

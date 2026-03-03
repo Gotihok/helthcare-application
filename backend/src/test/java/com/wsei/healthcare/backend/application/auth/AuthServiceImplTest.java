@@ -2,14 +2,16 @@ package com.wsei.healthcare.backend.application.auth;
 
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
-import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.token.JwtTokenService;
 import com.wsei.healthcare.backend.application.token.TokenRevocationService;
 import com.wsei.healthcare.backend.application.user.CreateUserCommand;
 import com.wsei.healthcare.backend.application.user.UserService;
 import com.wsei.healthcare.backend.infra.security.Jwt;
-import com.wsei.healthcare.backend.util.auth.*;
+import com.wsei.healthcare.backend.util.auth.AuthConstants;
+import com.wsei.healthcare.backend.util.auth.JwtResponseFactory;
+import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
+import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -219,71 +223,16 @@ class AuthServiceImplTest implements AuthConstants {
     // LOGOUT
 
     @Test
-    void logout_shouldRegisterTokenRevocation_whenJwtIsValid() {
+    void logout_shouldRegisterTokenRevocation_whenAuthenticated() {
         // given
-        LogoutRequest request = LogoutRequestBuilder.getNoTokenDefault()
-                .setJwt(JWT_TOKEN_STUB)
-                .build();
-
-        when(jwtTokenService.isValid(JWT_TOKEN_STUB))
-                .thenReturn(true);
-
-        // when
-        authService.logout(request);
-
-        //then
-        verify(jwtTokenService, never()).generateToken(any());
-        verify(authenticationManager, never()).authenticate(any());
-
-        verify(jwtTokenService).isValid(JWT_TOKEN_STUB);
-        verify(tokenRevocationService).registerLoggedOut(JWT_TOKEN_STUB);
-    }
-
-    @Test
-    void logout_shouldNotRegisterTokenRevocation_whenJwtIsInvalid() {
-        // given
-        LogoutRequest request = LogoutRequestBuilder.getNoTokenDefault()
-                .setJwt(JWT_TOKEN_STUB)
-                .build();
-
-        when(jwtTokenService.isValid(JWT_TOKEN_STUB))
-                .thenReturn(false);
-
-        // when
-        authService.logout(request);
-
-        //then
-        verify(jwtTokenService, never()).generateToken(any());
-        verify(authenticationManager, never()).authenticate(any());
-
-        verify(jwtTokenService).isValid(JWT_TOKEN_STUB);
-        verify(tokenRevocationService, never()).registerLoggedOut(any());
-    }
-
-    @Test
-    void logout_shouldPropagateException_whenTokenRevocationServiceFails() {
-        // given
-        LogoutRequest request = LogoutRequestBuilder.getNoTokenDefault()
-                .setJwt(JWT_TOKEN_STUB)
-                .build();
-
-        when(jwtTokenService.isValid(JWT_TOKEN_STUB))
-                .thenReturn(true);
-
-        doThrow(new RuntimeException())
-                .when(tokenRevocationService).registerLoggedOut(JWT_TOKEN_STUB);
-
-        // when
-        assertThrows(
-                RuntimeException.class,
-                () -> authService.logout(request)
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                VALID_EMAIL, JWT_TOKEN_STUB, List.of()
         );
 
-        //then
-        verify(jwtTokenService, never()).generateToken(any());
-        verify(authenticationManager, never()).authenticate(any());
+        // when
+        authService.logout(authentication);
 
-        verify(jwtTokenService).isValid(JWT_TOKEN_STUB);
+        //then
         verify(tokenRevocationService).registerLoggedOut(JWT_TOKEN_STUB);
     }
 }

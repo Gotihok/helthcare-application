@@ -1,8 +1,6 @@
 package com.wsei.healthcare.backend.integration.auth;
 
-import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.LogoutRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,20 +21,14 @@ public class LogoutIT extends AbstractAuthIT {
         shouldAuthorize(jwt);
 
         // Logout
-        performLogout(
-                LogoutRequestBuilder.getNoTokenDefault()
-                .setJwt(jwt)
-                .build()
-        ).andExpect(status().isNoContent());
+        performLogout(jwt)
+                .andExpect(status().isNoContent());
         shouldReject(jwt);
     }
 
     @Test
     void logout_shouldReturnUnauthorized_whenJwtIsUnauthenticated() throws Exception {
-        performLogout(
-                LogoutRequestBuilder.getNoTokenDefault()
-                        .setJwt(AuthConstants.JWT_TOKEN_STUB)
-                        .build()
-        ).andExpect(status().isNoContent());
+        performLogout(JWT_TOKEN_STUB)
+                .andExpect(status().isUnauthorized());
     }
 }

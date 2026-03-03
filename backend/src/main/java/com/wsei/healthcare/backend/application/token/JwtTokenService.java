@@ -72,7 +72,7 @@ public class JwtTokenService {
         return parseClaims(token).getSubject();
     }
 
-    private Claims parseClaims(String token) {
+    private Claims parseClaims(String token) throws JwtException, IllegalArgumentException {
         return Jwts.parser()
                 .verifyWith(key)
                 .build()

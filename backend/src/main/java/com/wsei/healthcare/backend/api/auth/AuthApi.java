@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
 // TODO: Add error response schema (TO ERRORS IN ENDPOINTS)
 // TODO: Rename User<dto> requests to be auth related
@@ -84,6 +85,6 @@ public interface AuthApi {
                             schema = @Schema(implementation = LogoutRequest.class)
                     )
             )
-            LogoutRequest request
+            Authentication authentication
     );
 }
