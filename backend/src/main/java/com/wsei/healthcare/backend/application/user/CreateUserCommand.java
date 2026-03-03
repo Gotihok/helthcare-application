@@ -6,7 +6,8 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 public record CreateUserCommand(
-        //TODO: add other info
+        String firstName,
+        String lastName,
         String email,
         String password
 ) {

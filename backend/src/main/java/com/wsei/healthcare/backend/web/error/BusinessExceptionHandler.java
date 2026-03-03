@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class BusinessExceptionHandler extends BaseExceptionHandler {
 
-    // TODO: add validation error interception
+    // TODO: add validation error interception for proper error modeling
 
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<AppErrorResponse> handleAlreadyExistsException(

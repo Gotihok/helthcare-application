@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class UserPrincipal  implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
     private String email;
 

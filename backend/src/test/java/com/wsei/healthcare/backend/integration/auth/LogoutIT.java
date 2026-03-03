@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//TODO: implement
 public class LogoutIT extends AbstractAuthIT {
 
     @Test

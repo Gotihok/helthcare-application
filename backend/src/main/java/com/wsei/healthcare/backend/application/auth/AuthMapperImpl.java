@@ -9,6 +9,8 @@ public class AuthMapperImpl implements AuthMapper {
     @Override
     public CreateUserCommand toCreateUserCommand(RegisterRequest registerRequest) {
         return CreateUserCommand.builder()
+                .firstName(registerRequest.firstName())
+                .lastName(registerRequest.lastName())
                 .email(registerRequest.email())
                 .password(registerRequest.password())
                 .build();

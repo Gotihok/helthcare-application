@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 public class UserMapperImpl implements UserMapper {
     public AppUser toEntity(CreateUserCommand createUserCommand) {
         return new AppUser()
+                .setFirstName(createUserCommand.firstName())
+                .setLastName(createUserCommand.lastName())
                 .setEmail(createUserCommand.email())
                 .setPassword(createUserCommand.password());
     }
