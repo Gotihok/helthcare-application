@@ -16,6 +16,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION_SECONDS: ${JWT_EXPIRATION_SECONDS}
       JWT_PREFIX: "Bearer "
+      CORS_ORIGINS_ALLOWED: ${CORS_ORIGINS_ALLOWED}
 
   #TODO: add frontend service
 

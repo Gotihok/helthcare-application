@@ -24,3 +24,7 @@ logging:
   level:
     root: info
     com.wsei.healthcare: info
+
+cors:
+  allowed:
+    origins: ${cors.allowed.origins}
