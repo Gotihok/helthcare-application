@@ -49,7 +49,7 @@ public abstract class AbstractIntegrationalTest {
         registry.add("jwt.expiration.seconds", () -> 120);
         registry.add("jwt.prefix", () -> "Bearer ");
 
-        registry.add("cors.origins.allowed", () -> "http://localhost:4200");
+        registry.add("cors.origins.allowed", () -> "stub_because_no_consumer_in_tests");
     }
 
     @Autowired
