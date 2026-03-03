@@ -2,7 +2,8 @@ package com.wsei.healthcare.backend.api.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-//TODO: test
+//TODO: remove
+@Deprecated
 @Schema(description = "Logout request payload")
 public record LogoutRequest(
         @Schema(

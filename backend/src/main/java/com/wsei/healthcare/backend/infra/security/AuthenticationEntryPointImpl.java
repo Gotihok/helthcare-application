@@ -28,15 +28,16 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
             @NonNull AuthenticationException authException
     ) throws IOException {
 
+        int status = HttpStatus.UNAUTHORIZED.value();
         AppErrorResponse error = new AppErrorResponse(
                 Instant.now(),
-                HttpStatus.UNAUTHORIZED.value(),
-                "UNAUTHORIZED",
+                status,
+                "AUTHENTICATION_ERROR",
                 authException.getMessage(),
                 request.getRequestURI()
         );
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         objectMapper.writeValue(response.getOutputStream(), error);

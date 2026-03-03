@@ -28,15 +28,16 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
             @NonNull AccessDeniedException accessDeniedException
     ) throws IOException {
 
+        int status = HttpStatus.FORBIDDEN.value();
         AppErrorResponse error = new AppErrorResponse(
                 Instant.now(),
-                HttpStatus.FORBIDDEN.value(),
+                status,
                 "FORBIDDEN",
                 accessDeniedException.getMessage(),
                 request.getRequestURI()
         );
 
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         objectMapper.writeValue(response.getOutputStream(), error);

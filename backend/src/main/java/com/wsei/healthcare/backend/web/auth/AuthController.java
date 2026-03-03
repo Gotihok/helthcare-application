@@ -35,7 +35,7 @@ public class AuthController implements AuthApi {
             value = "/login",
             produces = "application/json"
     )
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<JwtResponse> login(@RequestBody @Valid LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 

@@ -55,8 +55,7 @@ public interface AuthApi {
                     )
             ),
             @ApiResponse(responseCode = "400", description = "Invalid login data (validation error)"),
-            @ApiResponse(responseCode = "401", description = "Invalid credentials"),
-            @ApiResponse(responseCode = "403", description = "User account is disabled or locked")
+            @ApiResponse(responseCode = "401", description = "Invalid credentials or account is disabled or locked"),
     })
     ResponseEntity<JwtResponse> login(
             @RequestBody(
@@ -71,7 +70,7 @@ public interface AuthApi {
 
     // ------------------------------------------------------------
 
-    //TODO: change to be working with a header
+    //TODO: adjust documentation
     @Operation(summary = "Logout user")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "User successfully logged out"),
