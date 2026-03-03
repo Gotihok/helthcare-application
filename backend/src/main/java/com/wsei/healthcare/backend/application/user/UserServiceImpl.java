@@ -15,7 +15,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(CreateUserCommand createUserCommand) {
-        userRepository.existsAppUserByEmail(createUserCommand.email());
+        if (userRepository.existsAppUserByEmail(createUserCommand.email())) {
+            throw new UserAlreadyExistsException("User with this email already exists");
+        }
 
         AppUser appUser = userMapper.toEntity(createUserCommand);
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));

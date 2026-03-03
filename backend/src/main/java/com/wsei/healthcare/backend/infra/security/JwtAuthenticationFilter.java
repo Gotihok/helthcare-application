@@ -9,25 +9,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+//TODO: test
 @Slf4j
-@Configuration
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenService tokenService;
     private final TokenRevocationService tokenRevocationService;
     private final UserDetailsService userDetailsService;
 
-    //TODO: add the exceptions with authEP and ADHandler exceptions if needed
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -36,30 +36,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String token = tokenService.resolveToken(
-                request.getHeader("Authorization")
-        );
+                request.getHeader("Authorization"));
 
-        if (token == null || tokenRevocationService.isLoggedOut(token)) {
+        if (token == null
+                || tokenRevocationService.isLoggedOut(token)
+                || !tokenService.isValid(token)
+        ) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        if (tokenService.isValid(token)) {
-            String username = tokenService.getUsername(token);
-            UserDetails userDetails;
-            try {
-                userDetails = userDetailsService.loadUserByUsername(username);
-            } catch (UsernameNotFoundException e) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        String username = tokenService.getUsername(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
-                    )
-            );
-        }
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        token,
+                        userDetails.getAuthorities()
+                );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }

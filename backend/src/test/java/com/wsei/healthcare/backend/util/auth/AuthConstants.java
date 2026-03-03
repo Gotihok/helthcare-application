@@ -13,6 +13,7 @@ public interface AuthConstants {
     String LOGOUT_URL = BASE_URL + "/logout";
 
     // FIELD VALUES
+    //TODO: move to user constants or leave doubled
     String VALID_FIRST_NAME = "firstName";
     String VALID_LAST_NAME = "lastName";
     String VALID_EMAIL = "email@example.com";

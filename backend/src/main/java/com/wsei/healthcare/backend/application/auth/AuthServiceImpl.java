@@ -2,7 +2,6 @@ package com.wsei.healthcare.backend.application.auth;
 
 import com.wsei.healthcare.backend.api.auth.JwtResponse;
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
-import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.token.JwtTokenService;
 import com.wsei.healthcare.backend.application.token.TokenRevocationService;
@@ -52,10 +51,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void logout(LogoutRequest logoutRequest) {
-        if (jwtTokenService.isValid(logoutRequest.jwt())) {
-            tokenRevocationService.registerLoggedOut(logoutRequest.jwt());
-        }
-        //TODO: throw some exception to map to unauthorized in api response
+    public void logout(Authentication authentication) {
+        String token = (String) authentication.getCredentials();
+        tokenRevocationService.registerLoggedOut(token);
     }
 }

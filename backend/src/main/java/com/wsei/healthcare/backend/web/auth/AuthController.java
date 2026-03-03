@@ -1,10 +1,14 @@
 package com.wsei.healthcare.backend.web.auth;
 
-import com.wsei.healthcare.backend.api.auth.*;
+import com.wsei.healthcare.backend.api.auth.AuthApi;
+import com.wsei.healthcare.backend.api.auth.JwtResponse;
+import com.wsei.healthcare.backend.api.auth.LoginRequest;
+import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +44,8 @@ public class AuthController implements AuthApi {
             value = "/logout",
             produces = "application/json"
     )
-    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request) {
-        authService.logout(request);
+    public ResponseEntity<Void> logout(Authentication authentication) {
+        authService.logout(authentication);
         return ResponseEntity.noContent().build();
     }
 }

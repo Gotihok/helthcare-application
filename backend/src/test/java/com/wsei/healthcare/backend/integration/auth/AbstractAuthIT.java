@@ -1,7 +1,6 @@
 package com.wsei.healthcare.backend.integration.auth;
 
 import com.wsei.healthcare.backend.api.auth.LoginRequest;
-import com.wsei.healthcare.backend.api.auth.LogoutRequest;
 import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.auth.AuthMapper;
 import com.wsei.healthcare.backend.application.user.UserService;
@@ -80,10 +79,9 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
                 .content(objectMapper.writeValueAsString(request)));
     }
 
-    protected ResultActions performLogout(LogoutRequest request) throws Exception {
+    protected ResultActions performLogout(String token) throws Exception {
         return mockMvc.perform(post(LOGOUT_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)));
+                .header("Authorization", "Bearer " + token));
     }
 
     // Create user
