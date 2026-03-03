@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.infra.security;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.wsei.healthcare.backend.domain.user.AppUser;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,17 +10,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
-@Accessors(chain = true)
+@RequiredArgsConstructor
 public class UserPrincipal implements UserDetails {
 
-    private String email;
+    private final String email;
+    private final String password;
+    private final boolean enabled;
+    private final boolean accountNonLocked;
 
-    private String password;
-
-    private boolean enabled = true;
-
-    private boolean accountNonLocked = true;
+    public static UserPrincipal from(AppUser user) {
+        return new UserPrincipal(
+                user.getEmail(),
+                user.getPassword(),
+                user.isEnabled(),
+                user.isAccountNonLocked()
+        );
+    }
 
     @Override
     public @NullMarked Collection<? extends GrantedAuthority> getAuthorities() {
