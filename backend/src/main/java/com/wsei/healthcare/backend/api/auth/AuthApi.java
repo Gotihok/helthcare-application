@@ -70,20 +70,14 @@ public interface AuthApi {
 
     // ------------------------------------------------------------
 
-    //TODO: adjust documentation
-    @Operation(summary = "Logout user")
+    @Operation(
+            summary = "Logout user",
+            description = "Logs out the currently authenticated user. " +
+                    "The user is identified via the security context (Authentication object)."
+    )
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "User successfully logged out"),
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
-    ResponseEntity<Void> logout(
-            @RequestBody(
-                    description = "Logout request payload",
-                    required = true,
-                    content = @Content(
-                            schema = @Schema(implementation = LogoutRequest.class)
-                    )
-            )
-            Authentication authentication
-    );
+    ResponseEntity<Void> logout(Authentication authentication);
 }
