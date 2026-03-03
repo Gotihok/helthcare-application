@@ -29,7 +29,7 @@ tasks.register("dockerUp", Exec) {
 
 tasks.register("devUp") {
     group = "dev"
-    dependsOn("buildBackend", "dockerDown", "dockerUp")
+    dependsOn("buildBackend", "devTearDown", "dockerUp")
 }
 
 tasks.register("devUpNoTests") {
