@@ -8,8 +8,8 @@ spring:
     password: ${postgres-password}
 
   jpa:
-      hibernate:
-        ddl-auto: none
+    hibernate:
+      ddl-auto: validate
 
 # Configuration for open-api docs
 springdoc:
@@ -22,5 +22,9 @@ logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
   level:
-    root: debug
-    com.bhnatiuk.uni.bookstore: debug
+    root: info
+    com.wsei.healthcare: info
+
+cors:
+  allowed:
+    origins: ${cors.allowed.origins}
