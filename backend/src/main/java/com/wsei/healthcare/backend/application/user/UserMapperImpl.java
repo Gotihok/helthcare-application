@@ -8,8 +8,6 @@ public class UserMapperImpl implements UserMapper {
     public AppUser toEntity(CreateUserCommand createUserCommand) {
         return new AppUser()
                 .setEmail(createUserCommand.email())
-                .setPassword(createUserCommand.password())
-                .setEnabled(true)
-                .setAccountNonLocked(true);
+                .setPassword(createUserCommand.password());
     }
 }
