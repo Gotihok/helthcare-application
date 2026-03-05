@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.application.user;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 import com.wsei.healthcare.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("User with this email already exists");
         }
 
-        AppUser appUser = userMapper.toEntity(createUserCommand);
-        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-        userRepository.save(appUser);
+        UserEntity userEntity = userMapper.toEntity(createUserCommand);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userRepository.save(userEntity);
     }
 }

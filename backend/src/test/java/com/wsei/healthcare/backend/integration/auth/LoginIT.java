@@ -1,9 +1,9 @@
 package com.wsei.healthcare.backend.integration.auth;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.user.AppUserFactory;
+import com.wsei.healthcare.backend.util.user.UserEntityFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,13 +46,13 @@ public class LoginIT extends AbstractAuthIT {
     @Test
     void login_shouldReturnForbidden_whenAccountDisabled() throws Exception {
         userRepository.save(
-                AppUserFactory.getValidDefault()
+                UserEntityFactory.getValidDefault()
                         .setEnabled(false)
         );
 
-        AppUser appUser = userRepository.findAppUserByEmail(AuthConstants.VALID_EMAIL)
+        UserEntity userEntity = userRepository.findAppUserByEmail(AuthConstants.VALID_EMAIL)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        userRepository.save(appUser.setEnabled(false));
+        userRepository.save(userEntity.setEnabled(false));
 
         performLogin(LoginRequestBuilder.getValidDefault().build())
                 .andExpect(status().isUnauthorized());
@@ -61,13 +61,13 @@ public class LoginIT extends AbstractAuthIT {
     @Test
     void login_shouldReturnForbidden_whenAccountLocked() throws Exception {
         userRepository.save(
-                AppUserFactory.getValidDefault()
+                UserEntityFactory.getValidDefault()
                         .setAccountNonLocked(false)
         );
 
-        AppUser appUser = userRepository.findAppUserByEmail(AuthConstants.VALID_EMAIL)
+        UserEntity userEntity = userRepository.findAppUserByEmail(AuthConstants.VALID_EMAIL)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        userRepository.save(appUser.setAccountNonLocked(false));
+        userRepository.save(userEntity.setAccountNonLocked(false));
 
         performLogin(LoginRequestBuilder.getValidDefault().build())
                 .andExpect(status().isUnauthorized());

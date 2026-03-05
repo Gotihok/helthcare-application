@@ -1,8 +1,8 @@
 package com.wsei.healthcare.backend.application.user;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 import com.wsei.healthcare.backend.domain.user.UserRepository;
-import com.wsei.healthcare.backend.util.user.AppUserFactory;
+import com.wsei.healthcare.backend.util.user.UserEntityFactory;
 import com.wsei.healthcare.backend.util.user.CreateUserCommandFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ class UserServiceImplTest {
     void createUser_shouldCreateUser_whenUserDoesntExist() {
         // given
         CreateUserCommand command = CreateUserCommandFactory.getValidDefault();
-        AppUser mappedUser = AppUserFactory.getValidDefault();
+        UserEntity mappedUser = UserEntityFactory.getValidDefault();
         String rawPassword = mappedUser.getPassword();
         String encodedPassword = "ENCODED_PASSWORD";
 
@@ -57,10 +57,10 @@ class UserServiceImplTest {
         verify(userMapper).toEntity(command);
         verify(passwordEncoder).encode(rawPassword);
 
-        ArgumentCaptor<AppUser> captor = ArgumentCaptor.forClass(AppUser.class);
+        ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).save(captor.capture());
 
-        AppUser savedUser = captor.getValue();
+        UserEntity savedUser = captor.getValue();
         assertEquals(encodedPassword, savedUser.getPassword());
     }
 

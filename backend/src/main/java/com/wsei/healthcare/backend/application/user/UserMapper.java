@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.application.user;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 
 public interface UserMapper {
-    AppUser toEntity(CreateUserCommand createUserCommand);
+    UserEntity toEntity(CreateUserCommand createUserCommand);
 }

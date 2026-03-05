@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.infra.security;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 import com.wsei.healthcare.backend.domain.user.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @NonNull
     public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
-        AppUser user = userRepository.findAppUserByEmail(email)
+        UserEntity userEntity = userRepository.findAppUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return UserPrincipal.from(user);
+        return UserPrincipal.from(userEntity);
     }
 }

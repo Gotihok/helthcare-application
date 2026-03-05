@@ -1,34 +1,25 @@
 package com.wsei.healthcare.backend.domain.user;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import java.time.LocalDate;
+import java.util.List;
 
-@Entity
-@Table(name = "users")
-@Data
-@Accessors(chain = true)
 public class AppUser {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    // Common
     private String firstName;
-
-    @Column(nullable = false)
     private String lastName;
-
-    @Column(unique = true, nullable = false)
     private String email;
+    private String phoneNumber;
+    private LocalDate dateOfBirth;
 
-    @Column(nullable = false)
-    private String password;
+    // Patient
+    private Doctor personalDoctor;
+//    private List<Visit> upcomingVisits;
+//    private List<Prescription> activePrescriptions;
 
-    @Column(nullable = false)
-    private boolean enabled = true;
-
-    @Column(nullable = false)
-    private boolean accountNonLocked = true;
+    // Doctor
+    private String specialization;
+    private String description;
+    private List<Patient> patients;
 }

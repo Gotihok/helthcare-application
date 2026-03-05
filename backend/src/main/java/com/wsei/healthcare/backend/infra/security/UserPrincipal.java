@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.infra.security;
 
-import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
@@ -18,7 +18,7 @@ public class UserPrincipal implements UserDetails {
     private final boolean enabled;
     private final boolean accountNonLocked;
 
-    public static UserPrincipal from(AppUser user) {
+    public static UserPrincipal from(UserEntity user) {
         return new UserPrincipal(
                 user.getEmail(),
                 user.getPassword(),
