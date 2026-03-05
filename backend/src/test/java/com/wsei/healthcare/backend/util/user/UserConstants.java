@@ -1,7 +1,6 @@
 package com.wsei.healthcare.backend.util.user;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public interface UserConstants {
     String FIRST_NAME = "firstName";
