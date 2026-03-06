@@ -1,10 +1,10 @@
 package com.wsei.healthcare.backend.integration.auth;
 
-import com.wsei.healthcare.backend.api.auth.LoginRequest;
-import com.wsei.healthcare.backend.api.auth.RegisterRequest;
-import com.wsei.healthcare.backend.application.auth.AuthMapper;
-import com.wsei.healthcare.backend.application.user.UserService;
-import com.wsei.healthcare.backend.domain.user.UserRepository;
+import com.wsei.healthcare.backend.auth.api.LoginRequest;
+import com.wsei.healthcare.backend.auth.api.RegisterRequest;
+import com.wsei.healthcare.backend.auth.infra.AuthMapper;
+import com.wsei.healthcare.backend.to_move.application.user.UserService;
+import com.wsei.healthcare.backend.to_move.UserRepository;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;

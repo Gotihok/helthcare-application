@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.integration.auth;
 
-import com.wsei.healthcare.backend.domain.user.UserEntity;
+import com.wsei.healthcare.backend.to_move.UserEntity;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
 import com.wsei.healthcare.backend.util.user.UserEntityFactory;

@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.util.auth;
 
-import com.wsei.healthcare.backend.api.auth.LoginRequest;
+import com.wsei.healthcare.backend.auth.api.LoginRequest;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 

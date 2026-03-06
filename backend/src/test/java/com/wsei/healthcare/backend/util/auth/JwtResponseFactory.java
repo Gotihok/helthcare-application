@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.util.auth;
 
-import com.wsei.healthcare.backend.api.auth.JwtResponse;
-import com.wsei.healthcare.backend.infra.security.Jwt;
+import com.wsei.healthcare.backend.auth.api.JwtResponse;
+import com.wsei.healthcare.backend.auth.domain.Jwt;
 
 public final class JwtResponseFactory implements AuthConstants {
 

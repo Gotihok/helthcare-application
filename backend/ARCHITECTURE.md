@@ -1,7 +1,3 @@
-# DentoCare Portal – Architecture Plan
-
----
-
 # 1. Architectural Model
 
 ## 1.1 Modular Monolith
@@ -18,8 +14,11 @@ Each module encapsulates:
 Modules are:
 
 - independently understandable
-- isolated by interfaces
+- isolated through explicit interfaces
 - extractable to microservices if required
+
+The architecture enforces **strict module boundaries**.  
+Modules communicate **only through their public API layer**.
 
 ---
 
@@ -32,6 +31,8 @@ Every module follows the same structure:
     ├── application
     ├── api
     └── infra
+
+Each layer has clearly defined responsibilities and dependency rules.
 
 ---
 
@@ -49,7 +50,9 @@ Contains the **pure business model**.
 - Pure Java (no frameworks)
 - No Spring, JPA, or infrastructure code
 - Defines repository interfaces used by the application layer
-- Does not depend on any other module
+- Contains core business logic and invariants
+- Completely isolated from other modules
+- Does **not depend on any module APIs**
 
 ### Example
 
@@ -71,13 +74,21 @@ Implements **use cases and business orchestration**.
 
 - orchestrate domain logic
 - enforce business rules
-- coordinate repository calls
+- coordinate repository usage
+- transform API DTOs into domain models
+- expose internal use cases
 
 ### Rules
 
-- depends only on `domain` and `API DTOs`
-- contains no infrastructure code
+- depends only on:
+    - `domain`
+    - `api.dto` of the same module
+- contains no framework code
+- contains no persistence logic
 - services are stateless
+- does **not call other modules directly**
+
+Cross-module communication **must go through module APIs**.
 
 ### Example
 
@@ -90,7 +101,7 @@ Implements **use cases and business orchestration**.
 
 ## 2.3 API
 
-Defines the **external contract** of the module.
+Defines the **public contract of the module**.
 
     api
     ├── contract
@@ -105,60 +116,138 @@ Defines the **external contract** of the module.
     RequestDTO
     ResponseDTO
 
+### Responsibilities
+
+- define the **only allowed entry points** to the module
+- provide request and response DTOs
+- expose business capabilities to:
+    - other modules
+    - web controllers
+    - external systems
+
 ### Rules
 
-- defines public module interface
-- contains request/response DTOs
-- framework-free except optional Swagger/OpenAPI annotations
-- treated as a contract layer
+- defines **public module interfaces**
+- contains **DTOs used for communication**
+- framework-free (except optional OpenAPI annotations)
+- does **not contain business logic**
+- does **not contain framework implementations**
 
-Controllers implement API interfaces in infrastructure.
+### Important
+
+The API layer serves **two roles simultaneously**:
+
+1. **External system contract** (REST / HTTP)
+2. **Internal module communication contract**
+
+All inter-module calls must go through **API interfaces**.
 
 ### Example
 
 - `PatientApi`
 - `DoctorApi`
 - `AppointmentApi`
+- `MedicalApi`
 
 ---
 
 ## 2.4 Infrastructure
 
-Contains **framework integrations and adapters**.
+Contains **all framework integrations and adapters**.
 
     infra
     ├── persistence
     ├── web
+    ├── integration
     └── config
 
 ### Responsibilities
 
-#### Persistence
+- implement repository interfaces
+- expose REST endpoints
+- adapt API contracts to the outside world
+- perform cross-module API calls
+- configure framework integrations
+
+### Persistence
+
+    infra/persistence
 
 - JPA entities
 - repository implementations
-- database mappings
+- ORM mappings
 
-#### Web
+Example:
+
+- `JpaPatientRepository`
+- `JpaDoctorRepository`
+
+---
+
+### Web
+
+    infra/web
 
 - REST controllers
+- HTTP request mapping
 - API interface implementations
 
-#### Config
+Controllers **implement the module API interfaces** and delegate to application services.
+
+Example:
+
+- `PatientController`
+- `DoctorController`
+- `AppointmentController`
+
+---
+
+### Integration
+
+    infra/integration
+
+Responsible for **calling other modules' APIs**.
+
+This layer contains adapters that depend on **API interfaces of other modules**.
+
+Example:
+
+- `PatientApiClient`
+- `DoctorApiClient`
+- `AppointmentApiClient`
+
+These adapters translate between:
+
+- external module DTOs
+- local domain models
+
+---
+
+### Config
+
+    infra/config
 
 - Spring configuration
 - module wiring
+- bean definitions
 
-### Example
+Example:
 
-- `JpaPatientRepository`
-- `PatientController`
 - `PatientModuleConfig`
+- `AppointmentModuleConfig`
+
+---
 
 ### Rules
 
-- may depend on `domain`, `application`, and `api`
-- contains all framework dependencies
+Infrastructure may depend on:
+
+- `domain`
+- `application`
+- `api`
+- APIs of other modules
+
+Infrastructure is the **only layer allowed to know about frameworks**.
 
 ---
 
@@ -168,7 +257,7 @@ Contains **framework integrations and adapters**.
 
 ## 3.1 Identity Module
 
-**Purpose:** user authentication and authorization data.
+Purpose: **user authentication and authorization data**.
 
     identity
     ├── domain
@@ -179,27 +268,73 @@ Contains **framework integrations and adapters**.
     │ └── IdentityService
     │
     ├── api
-    │ └── (optional)
+    │ ├── IdentityApi
+    │ └── dto
     │
     └── infra
-    └── JpaIdentityUserRepository
+        ├── persistence
+        │ └── JpaIdentityUserRepository
+        └── web
+            └── IdentityController
 
 ### Responsibilities
 
 - user accounts
 - roles
-- authentication lookup
+- user lookup
+- identity management
 
 ### Rules
 
 - no Spring Security dependencies in domain
-- used by the security adapter in `shared.security`
+- authentication frameworks interact through `shared.security`
+- other modules interact **only through `IdentityApi`**
 
 ---
 
-## 3.2 Patient Module
+## 3.2 Auth Module
 
-**Purpose:** patient profile management.
+Purpose: **authentication flows and token issuing**.
+
+    auth
+    ├── domain
+    │ └── RefreshToken
+    │
+    ├── application
+    │ └── AuthService
+    │
+    ├── api
+    │ ├── AuthApi
+    │ └── dto
+    │
+    └── infra
+        └── web
+            └── AuthController
+
+### Responsibilities
+
+- user login
+- user registration
+- token issuing (JWT)
+- token refresh
+- logout handling
+
+### Dependencies
+
+- `IdentityApi`
+
+### Important
+
+Auth module **does not access identity repositories directly**.  
+It communicates with the identity module through **`IdentityApi`**.
+
+Token validation is handled by `shared.security`.
+
+---
+
+## 3.3 Patient Module
+
+Purpose: **patient profile management**.
 
     patient
     ├── domain
@@ -214,21 +349,25 @@ Contains **framework integrations and adapters**.
     │ └── dto
     │
     └── infra
-    ├── persistence
-    │ └── JpaPatientRepository
-    └── web
-    └── PatientController
+        ├── persistence
+        │ └── JpaPatientRepository
+        ├── web
+        │   └── PatientController
+        └── integration
 
 ### Responsibilities
 
 - manage patient data
 - assign doctors
+- expose patient operations
+
+Other modules access patient functionality **through `PatientApi` only**.
 
 ---
 
-## 3.3 Doctor Module
+## 3.4 Doctor Module
 
-**Purpose:** doctor profile management.
+Purpose: **doctor profile management**.
 
     doctor
     ├── domain
@@ -243,21 +382,25 @@ Contains **framework integrations and adapters**.
     │ └── dto
     │
     └── infra
-    ├── persistence
-    │ └── JpaDoctorRepository
-    └── web
-    └── DoctorController
+        ├── persistence
+        │ └── JpaDoctorRepository
+        ├── web
+        │   └── DoctorController
+        └── integration
 
 ### Responsibilities
 
-- manage doctor data
-- maintain doctor availability
+- manage doctor profiles
+- manage availability
+- expose doctor data
+
+Other modules must use **`DoctorApi`**.
 
 ---
 
-## 3.4 Appointment Module
+## 3.5 Appointment Module
 
-**Purpose:** appointment scheduling and lifecycle.
+Purpose: **appointment scheduling and lifecycle**.
 
     appointment
     ├── domain
@@ -272,32 +415,33 @@ Contains **framework integrations and adapters**.
     │ └── dto
     │
     └── infra
-    ├── persistence
-    │ └── JpaAppointmentRepository
-    └── web
-    └── AppointmentController
+        ├── persistence
+        │ └── JpaAppointmentRepository
+        ├── web
+        │   └── AppointmentController
+        └── integration
 
 ### Responsibilities
 
 - schedule appointments
-- update or cancel bookings
+- update bookings
+- cancel bookings
 - enforce scheduling rules
 
 ### Dependencies
 
-- `PatientRepository`
-- `DoctorRepository`
+- `PatientApi`
+- `DoctorApi`
 
-### Important
+Infrastructure adapters call those APIs.
 
-- references external entities **by ID only**
-- does **not depend on other modules' services**
+The domain model references **only IDs**, never external entities.
 
 ---
 
-## 3.5 Medical Module
+## 3.6 Medical Module
 
-**Purpose:** medical records and prescriptions.
+Purpose: **medical records and prescriptions**.
 
     medical
     ├── domain
@@ -313,10 +457,11 @@ Contains **framework integrations and adapters**.
     │ └── dto
     │
     └── infra
-    ├── persistence
-    │ └── JpaMedicalRepository
-    └── web
-    └── MedicalController
+        ├── persistence
+        │ └── JpaMedicalRepository
+        ├── web
+        │   └── MedicalController
+        └── integration
 
 ### Responsibilities
 
@@ -326,15 +471,17 @@ Contains **framework integrations and adapters**.
 
 ### Dependencies
 
-- `AppointmentRepository`
-- `PatientRepository`
-- `DoctorRepository`
+- `AppointmentApi`
+- `PatientApi`
+- `DoctorApi`
+
+These APIs are accessed through **integration adapters**.
 
 ---
 
-## 3.6 Dashboard Module
+## 3.7 Dashboard Module
 
-**Purpose:** aggregated read views.
+Purpose: **aggregated read views**.
 
     dashboard
     ├── application
@@ -346,21 +493,22 @@ Contains **framework integrations and adapters**.
     │ └── dto
     │
     └── infra
-    └── web
-    └── DashboardController
+        ├── web
+        │   └── DashboardController
+        └── integration
 
 ### Characteristics
 
 - read-only module
 - aggregates data from multiple modules
-- optimized queries
+- optimized for query performance
 
 ### Dependencies
 
-- `PatientRepository`
-- `DoctorRepository`
-- `AppointmentRepository`
-- `MedicalRepository`
+- `PatientApi`
+- `DoctorApi`
+- `AppointmentApi`
+- `MedicalApi`
 
 ---
 
@@ -375,44 +523,73 @@ Contains **framework integrations and adapters**.
     │ └── UserPrincipal
     │
     └── config
-    └── AppConfig
+        └── AppConfig
 
 ### Responsibilities
 
-- global exception types
+- shared exception hierarchy
 - security adapters
 - application configuration
+- cross-module infrastructure utilities
+
+Shared modules must **not contain business logic**.
 
 ---
 
 # 5. Module Dependency Rules
 
-### Allowed Dependencies
+## Allowed Dependencies
 
-    infra → api
     infra → application
     infra → domain
+    infra → api
 
     application → domain
     application → api.dto
 
-### Forbidden Dependencies
+    infra → other-module.api
+
+---
+
+## Forbidden Dependencies
 
     domain → any other layer
+    domain → other modules
+
     application → infra
+    application → other-module.application
+
     api → infra
 
-### Inter-module Communication
+    module → other-module.domain
 
-- repository interfaces only
-- no direct service calls
-- no domain entity sharing
+---
+
+## Inter-Module Communication
+
+Modules communicate **only through API interfaces**.
+
+Allowed flow:
+
+    Module A (infra/integration)
+        ↓
+    Module B API interface
+        ↓
+    Module B application service
+        ↓
+    Module B domain
+
+This guarantees:
+
+- module isolation
+- explicit contracts
+- easy microservice extraction
 
 ---
 
 # 6. Database Strategy
 
-Modules share a **database** but maintain **internal mappings**.
+Modules share a **single database**, but maintain **strict ownership of their data model**.
 
 Persistence entities exist **only in `infra.persistence`.**
 
@@ -428,6 +605,8 @@ Persistence entities exist **only in `infra.persistence`.**
 ### Mapping
 
     JPA Entity → Domain Object
+
+Domain models **never depend on persistence entities**.
 
 ---
 
@@ -448,12 +627,14 @@ Security is implemented as an **adapter layer**.
 ### Flow
 
     Spring Security
-    ↓
+        ↓
     SpringUserDetailsService
-    ↓
+        ↓
+    IdentityApi
+        ↓
+    IdentityService
+        ↓
     IdentityUserRepository
-    ↓
-    JpaIdentityUserRepository
 
 `UserPrincipal` adapts `IdentityUser` to Spring Security.
 
@@ -462,34 +643,36 @@ Security is implemented as an **adapter layer**.
 # 8. Module Dependency Graph
 
     dashboard
-    ↓
+        ↓
     [patient, doctor, appointment, medical]
 
     appointment
-    ↓
+        ↓
     [patient, doctor]
 
     medical
-    ↓
+        ↓
     [appointment, patient, doctor]
 
-    security
-    ↓
+    auth
+        ↓
     identity
 
-### Properties
+All dependencies are **API-based**.
+
+Properties:
 
 - no circular dependencies
-- interface-based communication
-- domain isolation
+- contract-based communication
+- strict domain isolation
 
 ---
 
 # 9. Extension Strategy
 
-New modules can be added **without modifying existing ones**.
+New modules can be added **without modifying existing modules**.
 
-### Examples
+Examples:
 
 - `payments`
 - `notifications`
@@ -498,6 +681,16 @@ New modules can be added **without modifying existing ones**.
 
 ### Rules
 
-- follow the same module structure
-- depend only on repository interfaces
-- keep domain isolated
+New modules must:
+
+- expose an `api` layer
+- encapsulate their domain model
+- communicate with other modules **only through APIs**
+- keep business logic inside their own domain and application layers
+
+This architecture ensures:
+
+- clear module boundaries
+- stable contracts
+- high maintainability
+- easy migration to microservices

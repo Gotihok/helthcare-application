@@ -1,7 +1,11 @@
 package com.wsei.healthcare.backend.application.user;
 
-import com.wsei.healthcare.backend.domain.user.UserEntity;
-import com.wsei.healthcare.backend.domain.user.UserRepository;
+import com.wsei.healthcare.backend.to_move.UserEntity;
+import com.wsei.healthcare.backend.to_move.UserRepository;
+import com.wsei.healthcare.backend.to_move.application.user.CreateUserCommand;
+import com.wsei.healthcare.backend.to_move.application.user.UserAlreadyExistsException;
+import com.wsei.healthcare.backend.to_move.application.user.UserMapper;
+import com.wsei.healthcare.backend.to_move.application.user.UserServiceImpl;
 import com.wsei.healthcare.backend.util.user.UserEntityFactory;
 import com.wsei.healthcare.backend.util.user.CreateUserCommandFactory;
 import org.junit.jupiter.api.Test;

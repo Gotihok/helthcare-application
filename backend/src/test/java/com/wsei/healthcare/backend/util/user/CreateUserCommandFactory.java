@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.util.user;
 
-import com.wsei.healthcare.backend.application.user.CreateUserCommand;
+import com.wsei.healthcare.backend.to_move.application.user.CreateUserCommand;
 
 public final class CreateUserCommandFactory implements UserConstants {
 
