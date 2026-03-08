@@ -2,10 +2,12 @@ package com.wsei.healthcare.backend.integration.auth;
 
 import com.wsei.healthcare.backend.auth.api.LoginRequest;
 import com.wsei.healthcare.backend.auth.api.RegisterRequest;
-import com.wsei.healthcare.backend.auth.infra.AuthMapper;
-import com.wsei.healthcare.backend.to_move.application.user.UserService;
-import com.wsei.healthcare.backend.to_move.UserRepository;
+import com.wsei.healthcare.backend.auth.infra.integration.AuthMapper;
+import com.wsei.healthcare.backend.auth.infra.persistence.AuthIdentityJpaRepository;
+import com.wsei.healthcare.backend.user.application.UserService;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
+import com.wsei.healthcare.backend.user.domain.UserRepository;
+import com.wsei.healthcare.backend.user.infra.UserJpaRepository;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import jakarta.transaction.Transactional;
@@ -24,18 +26,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthConstants {
 
     @Autowired
-    protected UserRepository userRepository;
+    protected UserJpaRepository userJpaRepository;
 
     @Autowired
-    protected UserService userService;
-
-    @Autowired
-    protected AuthMapper authMapper;
+    protected AuthIdentityJpaRepository authIdentityJpaRepository;
 
     @Transactional
     @AfterEach
     void cleanDatabase() {
-        userRepository.deleteAll();
+        userJpaRepository.deleteAll();
+        authIdentityJpaRepository.deleteAll();
     }
 
     @RestController
@@ -85,11 +85,7 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
     }
 
     // Create user
-    protected void createDefaultUser() {
-        userService.createUser(
-                authMapper.toCreateUserCommand(
-                        RegisterRequestBuilder.getValidDefault().build()
-                )
-        );
+    protected void createDefaultUser() throws Exception {
+        performRegister(RegisterRequestBuilder.getValidDefault().build());
     }
 }

@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.util.user;
 
-import com.wsei.healthcare.backend.to_move.UserEntity;
+import com.wsei.healthcare.backend.user.infra.UserEntity;
 
 public class UserEntityFactory implements UserConstants {
 
@@ -9,10 +9,7 @@ public class UserEntityFactory implements UserConstants {
                 .setFirstName(FIRST_NAME)
                 .setLastName(LAST_NAME)
                 .setEmail(VALID_EMAIL)
-                .setPassword(VALID_PASSWORD)
                 .setPhoneNumber(VALID_PHONE_NUMBER)
-                .setDateOfBirth(VALID_DATE_OF_BIRTH)
-                .setEnabled(true)
-                .setAccountNonLocked(true);
+                .setDateOfBirth(VALID_DATE_OF_BIRTH);
     }
 }

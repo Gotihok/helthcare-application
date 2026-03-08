@@ -1,29 +1,8 @@
 package com.wsei.healthcare.backend.application.auth;
 
-import com.wsei.healthcare.backend.auth.api.LogoutRequest;
-import com.wsei.healthcare.backend.auth.api.JwtResponse;
-import com.wsei.healthcare.backend.auth.api.LoginRequest;
-import com.wsei.healthcare.backend.auth.api.RegisterRequest;
-import com.wsei.healthcare.backend.auth.application.*;
-import com.wsei.healthcare.backend.auth.infra.AuthMapper;
-import com.wsei.healthcare.backend.to_move.application.user.CreateUserCommand;
-import com.wsei.healthcare.backend.to_move.application.user.UserService;
-import com.wsei.healthcare.backend.auth.domain.Jwt;
-import com.wsei.healthcare.backend.util.auth.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 //@ExtendWith(MockitoExtension.class)
 //class AuthServiceImplTest implements AuthConstants {
@@ -52,7 +31,7 @@ import static org.mockito.Mockito.*;
 //    void register_shouldCreateUserAndReturnJwt_whenValidRequest() {
 //        // given
 //        RegisterRequest request = RegisterRequestBuilder.getValidDefault().build();
-//        CreateUserCommand createUserCommand = authMapper.toCreateUserCommand(request);
+//        UserCreateRequest createUserCommand = authMapper.toCreateUserCommand(request);
 //        Jwt jwtStub = new Jwt()
 //                .setJwt(JWT_TOKEN_STUB)
 //                .setExpiresAt(JWT_EXPIRATION_STUB);
@@ -85,7 +64,7 @@ import static org.mockito.Mockito.*;
 //    void register_shouldPropagateExceptionAndNotAuthenticate_whenUserCreationFails() {
 //        // given
 //        RegisterRequest request = RegisterRequestBuilder.getValidDefault().build();
-//        CreateUserCommand createUserCommand = authMapper.toCreateUserCommand(request);
+//        UserCreateRequest createUserCommand = authMapper.toCreateUserCommand(request);
 //        doThrow(new RuntimeException())
 //                .when(userService).createUser(eq(createUserCommand));
 //

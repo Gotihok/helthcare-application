@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.auth.application;
 
+import com.wsei.healthcare.backend.auth.api.JwtResponse;
 import com.wsei.healthcare.backend.auth.domain.AppAuth;
-import com.wsei.healthcare.backend.auth.domain.Jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +32,7 @@ public class JwtTokenService implements TokenService {
     }
 
     @Override
-    public Jwt generateToken(@NotBlank AppAuth auth) {
+    public JwtResponse generateToken(@NotBlank AppAuth auth) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(jwtExpirationSeconds);
 
@@ -44,9 +44,7 @@ public class JwtTokenService implements TokenService {
                 .signWith(key)
                 .compact();
 
-        return new Jwt()
-                .setJwt(jwt)
-                .setExpiresAt(expiration);
+        return new JwtResponse(jwt, expiration);
     }
 
     @Override

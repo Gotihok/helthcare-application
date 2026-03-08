@@ -27,6 +27,8 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
             @NonNull HttpServletResponse response,
             @NonNull AuthenticationException authException
     ) throws IOException {
+        //TODO: remove
+        System.out.println("Exception: " + authException.getMessage());
 
         int status = HttpStatus.UNAUTHORIZED.value();
         AppErrorResponse error = new AppErrorResponse(

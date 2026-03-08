@@ -1,11 +1,11 @@
 package com.wsei.healthcare.backend.util.user;
 
-import com.wsei.healthcare.backend.to_move.application.user.CreateUserCommand;
+import com.wsei.healthcare.backend.user.api.UserCreateRequest;
 
 public final class CreateUserCommandFactory implements UserConstants {
 
-    public static CreateUserCommand getValidDefault() {
-        return CreateUserCommand.builder()
+    public static UserCreateRequest getValidDefault() {
+        return UserCreateRequest.builder()
                 .email(VALID_EMAIL)
                 .password(VALID_PASSWORD)
                 .build();
