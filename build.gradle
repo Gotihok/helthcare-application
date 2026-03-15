@@ -1,3 +1,5 @@
+// TEST COMMENT
+
 tasks.register("buildBackend") {
     dependsOn(":backend:build")
 }
