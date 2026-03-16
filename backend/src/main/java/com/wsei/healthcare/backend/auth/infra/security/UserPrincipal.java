@@ -22,11 +22,8 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 identity.getEmail(),
                 identity.getPasswordHash(),
-                //TODO: MAKE PROPER MAPPING
-                true,
-                true
-//                identity.isEnabled(),
-//                identity.isAccountNonLocked()
+                identity.isEnabled(),
+                identity.isAccountNonLocked()
         );
     }
 
@@ -37,15 +34,11 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public @NonNull String getPassword() {
-        //TODO: remove
-        System.out.println("Getting password: " + this.password);
         return password;
     }
 
     @Override
     public @NonNull String getUsername() {
-        //TODO: remove
-        System.out.println("Getting username: " + this.email);
         return email;
     }
 

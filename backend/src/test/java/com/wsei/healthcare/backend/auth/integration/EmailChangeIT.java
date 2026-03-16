@@ -47,6 +47,29 @@ public class EmailChangeIT extends AbstractAuthIT {
         shouldAuthorize(newToken);
     }
 
+    @Test
+    void shouldReturnForbidden_whenEmailIsNotOwned() throws Exception {
+        String secondEmail = VALID_EMAIL + "changed";
+
+        performRegister(RegisterRequestBuilder.getValidDefault().build())
+                .andExpect(status().isOk());
+        performRegister(RegisterRequestBuilder.getValidDefault().setEmail(secondEmail).build())
+                .andExpect(status().isOk());
+
+        String token = getToken(
+                performLogin(LoginRequestBuilder.getValidDefault().build())
+                        .andExpect(status().isOk())
+        );
+
+        performEmailChange(
+                token,
+                UserEmailUpdateRequestBuilder.getEmptyDefault()
+                        .setOldEmail(secondEmail)
+                        .setNewEmail(secondEmail + "asd")
+                        .build()
+        ).andExpect(status().isForbidden());
+    }
+
     //TODO: extract somewhere more appropriate
     private ResultActions performEmailChange(String token, UserEmailUpdateRequest request) throws Exception {
         return mockMvc.perform(patch(UPDATE_EMAIL_URL)

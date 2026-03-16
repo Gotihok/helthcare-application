@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AuthIdentityRepository extends JpaRepository<AuthIdentity, Long> {
 
-    Optional<AuthIdentity> findAppUserByEmail(@NonNull String email);
+    Optional<AuthIdentity> findAuthIdentityByEmail(@NonNull String email);
 
     Optional<AuthIdentity> findByUserId(Long userId);
 }

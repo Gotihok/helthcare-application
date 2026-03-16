@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @NonNull
     public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
-        AuthIdentity identity = authIdentityRepository.findAppUserByEmail(email)
+        AuthIdentity identity = authIdentityRepository.findAuthIdentityByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return UserPrincipal.from(identity);

@@ -7,5 +7,5 @@ import com.wsei.healthcare.backend.user.api.UserResponse;
 public interface UserService {
     UserResponse register(UserRegisterRequest request);
 
-    UserResponse updateEmail(UserEmailUpdateRequest request);
+    UserResponse updateEmail(UserEmailUpdateRequest request, String authName);
 }

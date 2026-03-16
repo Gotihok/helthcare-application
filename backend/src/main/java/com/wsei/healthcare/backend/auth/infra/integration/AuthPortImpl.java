@@ -15,11 +15,6 @@ public class AuthPortImpl implements AuthPort {
 
     @Override
     public AppAuth authenticate(String email, String password) {
-        //TODO: remove
-        System.out.println("Authenticating with email: " + email);
-        System.out.println("Authenticating with password: " + password);
-
-        //TODO: fix Bad credentials when trying to auth
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         email,

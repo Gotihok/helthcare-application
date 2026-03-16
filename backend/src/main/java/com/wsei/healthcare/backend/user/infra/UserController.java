@@ -7,6 +7,7 @@ import com.wsei.healthcare.backend.user.api.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +23,10 @@ public class UserController {
     }
 
     @PatchMapping("/email")
-    public ResponseEntity<UserResponse> updateEmail(@RequestBody UserEmailUpdateRequest request) {
-        //TODO: secure not owned emails
-        return ResponseEntity.ok(userApi.updateUserEmail(request));
+    public ResponseEntity<UserResponse> updateEmail(
+            @RequestBody UserEmailUpdateRequest request,
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(userApi.updateUserEmail(request, authentication.getName()));
     }
 }

@@ -42,7 +42,6 @@ public class AuthController {
             produces = "application/json"
     )
     public ResponseEntity<Void> logout(Authentication authentication) {
-        //TODO: extract mapping
         authApi.logout(new LogoutRequest(
                 Objects.requireNonNull(authentication.getCredentials()).toString())
         );

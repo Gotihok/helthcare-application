@@ -19,7 +19,7 @@ public class UserFacade implements UserApi {
     }
 
     @Override
-    public UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest) {
-        return userService.updateEmail(userEmailUpdateRequest);
+    public UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest, String authName) {
+        return userService.updateEmail(userEmailUpdateRequest, authName);
     }
 }

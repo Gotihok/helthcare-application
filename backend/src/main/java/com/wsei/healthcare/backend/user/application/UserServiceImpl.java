@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -34,7 +36,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateEmail(UserEmailUpdateRequest request) {
+    public UserResponse updateEmail(UserEmailUpdateRequest request, String authName) {
+        if (!Objects.equals(request.oldEmail(), authName))
+            throw new EmailForbiddenOperationException("Couldn't change email that differs from authorized");
+
         AppUser user = userRepository.findByEmail(request.oldEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 

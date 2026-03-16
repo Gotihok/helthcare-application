@@ -37,5 +37,5 @@ public interface UserApi {
 //    //TODO: change to user response when introduced
 //    UserResponse createUser(UserCreateRequest userCreateRequest);
 
-    UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest);
+    UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest, String authName);
 }

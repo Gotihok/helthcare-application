@@ -1,7 +1,5 @@
 package com.wsei.healthcare.backend.auth.util;
 
-import java.time.Instant;
-
 public interface AuthConstants {
 
     // ENDPOINTS
@@ -23,5 +21,4 @@ public interface AuthConstants {
     String INVALID_PASSWORD = "";
 
     String JWT_TOKEN_STUB = "some.jwt.stub";
-    Instant JWT_EXPIRATION_STUB = Instant.now().plusSeconds(3600);
 }
