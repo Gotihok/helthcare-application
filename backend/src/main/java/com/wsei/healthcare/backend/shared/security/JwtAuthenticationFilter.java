@@ -13,12 +13,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 //TODO: test
+//TODO: check if exceptions should be handled separately
+//TODO: maybe change to auth entry point when errors are thrown and throw exception where {
+//          filterChain.doFilter(request, response);
+//          return;
+//      } are used
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -46,7 +52,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String username = tokenService.getUsername(token);
-        UserDetails principal = userDetailsService.loadUserByUsername(username);
+        UserDetails principal;
+
+        try {
+            principal = userDetailsService.loadUserByUsername(username);
+        } catch (UsernameNotFoundException e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(

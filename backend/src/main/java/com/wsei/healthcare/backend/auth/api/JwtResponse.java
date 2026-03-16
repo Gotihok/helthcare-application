@@ -9,7 +9,7 @@ public record JwtResponse(
 
         @Schema(
                 description = "JWT string with Bearer prefix",
-                example = "Bearer eyJhbGciOiJIUzI1NiIsI.nR5cCI6IkpXVCJ9..."
+                example = "eyJhbGciOiJIUzI1NiIsI.nR5cCI6IkpXVCJ9..."
         )
         String jwt,
 

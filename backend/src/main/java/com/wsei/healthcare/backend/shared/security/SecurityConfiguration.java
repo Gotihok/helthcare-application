@@ -26,7 +26,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity
+//TODO: remove debug before prod
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;

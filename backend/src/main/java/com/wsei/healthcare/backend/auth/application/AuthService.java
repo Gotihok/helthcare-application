@@ -11,4 +11,6 @@ public interface AuthService {
     JwtResponse login(LoginRequest loginRequest);
 
     void logout(LogoutRequest authentication);
+
+    void updateUserEmail(Long userId, String newEmail);
 }

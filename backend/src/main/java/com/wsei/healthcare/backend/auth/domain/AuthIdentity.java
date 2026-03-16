@@ -1,12 +1,17 @@
 package com.wsei.healthcare.backend.auth.domain;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-//TODO: implement event driven email update when user domain changes email
 @Data
+@Entity
+@Table(name = "auth_identity")
 @Accessors(chain = true)
 public class AuthIdentity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
     private String email;

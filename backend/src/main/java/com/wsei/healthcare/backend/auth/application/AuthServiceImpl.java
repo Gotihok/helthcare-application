@@ -22,6 +22,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponse register(RegisterRequest registerRequest) {
+
+        //TODO: refactor to be working with user created event
         Long createdUserId = userPort.createUser(registerRequest);
         identityRepository.save(
                 new AuthIdentity()
@@ -48,5 +50,14 @@ public class AuthServiceImpl implements AuthService {
     public void logout(LogoutRequest request) {
         String token = request.token();
         tokenRevocationService.registerLoggedOut(token);
+    }
+
+    @Override
+    public void updateUserEmail(Long userId, String newEmail) {
+        AuthIdentity identity = identityRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Identity not found"));
+
+        identity.setEmail(newEmail);
+        identityRepository.save(identity);
     }
 }

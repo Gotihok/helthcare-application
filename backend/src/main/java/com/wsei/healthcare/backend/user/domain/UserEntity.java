@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.user.infra;
+package com.wsei.healthcare.backend.user.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

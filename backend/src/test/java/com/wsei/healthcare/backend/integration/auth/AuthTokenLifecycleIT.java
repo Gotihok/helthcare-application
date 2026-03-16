@@ -39,4 +39,6 @@ public class AuthTokenLifecycleIT extends AbstractAuthIT {
         // 7. New token works
         shouldAuthorize(newToken);
     }
+
+    //TODO: test auth with email change
 }

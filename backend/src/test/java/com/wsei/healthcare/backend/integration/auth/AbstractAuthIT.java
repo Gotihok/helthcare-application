@@ -2,12 +2,9 @@ package com.wsei.healthcare.backend.integration.auth;
 
 import com.wsei.healthcare.backend.auth.api.LoginRequest;
 import com.wsei.healthcare.backend.auth.api.RegisterRequest;
-import com.wsei.healthcare.backend.auth.infra.integration.AuthMapper;
-import com.wsei.healthcare.backend.auth.infra.persistence.AuthIdentityJpaRepository;
-import com.wsei.healthcare.backend.user.application.UserService;
+import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
 import com.wsei.healthcare.backend.user.domain.UserRepository;
-import com.wsei.healthcare.backend.user.infra.UserJpaRepository;
 import com.wsei.healthcare.backend.util.auth.AuthConstants;
 import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
 import jakarta.transaction.Transactional;
@@ -26,16 +23,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthConstants {
 
     @Autowired
-    protected UserJpaRepository userJpaRepository;
+    protected UserRepository userRepository;
 
     @Autowired
-    protected AuthIdentityJpaRepository authIdentityJpaRepository;
+    protected AuthIdentityRepository authIdentityRepository;
 
     @Transactional
     @AfterEach
     void cleanDatabase() {
-        userJpaRepository.deleteAll();
-        authIdentityJpaRepository.deleteAll();
+        userRepository.deleteAll();
+        authIdentityRepository.deleteAll();
     }
 
     @RestController

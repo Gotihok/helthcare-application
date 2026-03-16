@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserPortImpl implements UserPort {
-    // TODO: refactor when user service changes
     private final AuthMapper authMapper;
     private final UserApi userApi;
 

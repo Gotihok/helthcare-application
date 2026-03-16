@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
-//TODO: maybe move to application layer
 @Component
 @RequiredArgsConstructor
 public class AuthFacade implements AuthApi {

@@ -37,7 +37,7 @@ public class JwtTokenService implements TokenService {
         Instant expiration = now.plusSeconds(jwtExpirationSeconds);
 
         String jwt = Jwts.builder()
-                .claim("jwtId", UUID.randomUUID().toString())
+                .claim("uid", UUID.randomUUID().toString())
                 .subject(auth.name())
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(expiration))

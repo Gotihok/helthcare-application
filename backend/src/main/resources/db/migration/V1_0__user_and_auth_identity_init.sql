@@ -5,7 +5,7 @@ CREATE TABLE auth_identity
     email         VARCHAR(255),
     password_hash VARCHAR(255),
     enabled       BOOLEAN                                 NOT NULL,
-    non_locked    BOOLEAN                                 NOT NULL,
+    account_non_locked    BOOLEAN                                 NOT NULL,
     CONSTRAINT pk_auth_identity PRIMARY KEY (id)
 );
 

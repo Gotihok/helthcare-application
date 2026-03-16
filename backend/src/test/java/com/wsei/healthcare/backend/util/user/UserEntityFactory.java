@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.util.user;
 
-import com.wsei.healthcare.backend.user.infra.UserEntity;
+import com.wsei.healthcare.backend.user.domain.UserEntity;
 
 public class UserEntityFactory implements UserConstants {
 
