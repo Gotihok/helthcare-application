@@ -1,6 +1,7 @@
 package com.wsei.healthcare.backend.shared.error;
 
-import com.wsei.healthcare.backend.shared.exception.AlreadyExistsException;
+import com.wsei.healthcare.backend.shared.exception.AlreadyExistsAppException;
+import com.wsei.healthcare.backend.shared.exception.ApplicationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +12,9 @@ public class BusinessExceptionHandler extends BaseExceptionHandler {
 
     // TODO: add validation error interception for proper error modeling
 
-    @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<AppErrorResponse> handleAlreadyExistsException(
-            AlreadyExistsException ex,
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<AppErrorResponse> handleApplicationBusinessException(
+            AlreadyExistsAppException ex,
             HttpServletRequest request
     ) {
         return buildResponse(ex, request);

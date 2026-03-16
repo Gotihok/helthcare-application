@@ -1,7 +1,7 @@
-package com.wsei.healthcare.backend.integration.auth;
+package com.wsei.healthcare.backend.auth.integration;
 
-import com.wsei.healthcare.backend.util.auth.AuthConstants;
-import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
+import com.wsei.healthcare.backend.auth.util.AuthConstants;
+import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

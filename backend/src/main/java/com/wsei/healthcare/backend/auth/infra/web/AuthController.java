@@ -1,6 +1,9 @@
 package com.wsei.healthcare.backend.auth.infra.web;
 
-import com.wsei.healthcare.backend.auth.api.*;
+import com.wsei.healthcare.backend.auth.api.AuthApi;
+import com.wsei.healthcare.backend.auth.api.JwtResponse;
+import com.wsei.healthcare.backend.auth.api.LoginRequest;
+import com.wsei.healthcare.backend.auth.api.LogoutRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +21,13 @@ import java.util.Objects;
 public class AuthController {
     private final AuthApi authApi;
 
-    @PostMapping(
-            value = "/register",
-            produces = "application/json"
-    )
-    public ResponseEntity<JwtResponse> register(@RequestBody @Valid RegisterRequest request) {
-        return ResponseEntity.ok(authApi.register(request));
-    }
+//    @PostMapping(
+//            value = "/register",
+//            produces = "application/json"
+//    )
+//    public ResponseEntity<JwtResponse> register(@RequestBody @Valid UserRegisterRequest request) {
+//        return ResponseEntity.ok(authApi.register(request));
+//    }
 
     @PostMapping(
             value = "/login",

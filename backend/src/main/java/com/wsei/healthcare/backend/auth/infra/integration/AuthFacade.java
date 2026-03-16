@@ -14,13 +14,13 @@ public class AuthFacade implements AuthApi {
     private final AuthService authService;
 
     @Override
-    public JwtResponse register(@RequestBody @Valid RegisterRequest request) {
-        return authService.register(request);
+    public void createAuthIdentity(AuthIdentityCreationRequest request) {
+        authService.createAuthIdentity(request);
     }
 
     @Override
     public JwtResponse login(@RequestBody @Valid LoginRequest request) {
-        return authService.login(request);
+        return authService.authenticate(request);
     }
 
     @Override

@@ -29,5 +29,5 @@ public class AppUser {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private LocalDate dateOfBirth;
+    private LocalDate birthDate;
 }

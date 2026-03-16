@@ -1,6 +1,7 @@
-package com.wsei.healthcare.backend.integration.auth;
+package com.wsei.healthcare.backend.auth.integration;
 
-import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
+import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,9 +10,11 @@ public class RegisterIT extends AbstractAuthIT {
 
     @Test
     void register_shouldRegisterUser_whenValidCredentials() throws Exception {
+        performRegister(RegisterRequestBuilder.getValidDefault().build())
+                .andExpect(status().isOk());
         String jwt = getToken(
-                performRegister(RegisterRequestBuilder.getValidDefault().build())
-                .andExpect(status().isOk())
+                performLogin(LoginRequestBuilder.getValidDefault().build())
+                        .andExpect(status().isOk())
         );
         shouldAuthorize(jwt);
     }

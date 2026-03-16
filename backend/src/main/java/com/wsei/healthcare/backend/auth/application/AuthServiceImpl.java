@@ -1,10 +1,13 @@
 package com.wsei.healthcare.backend.auth.application;
 
-import com.wsei.healthcare.backend.auth.api.LogoutRequest;
+import com.wsei.healthcare.backend.auth.api.AuthIdentityCreationRequest;
 import com.wsei.healthcare.backend.auth.api.JwtResponse;
 import com.wsei.healthcare.backend.auth.api.LoginRequest;
-import com.wsei.healthcare.backend.auth.api.RegisterRequest;
-import com.wsei.healthcare.backend.auth.domain.*;
+import com.wsei.healthcare.backend.auth.api.LogoutRequest;
+import com.wsei.healthcare.backend.auth.domain.AppAuth;
+import com.wsei.healthcare.backend.auth.domain.AuthIdentity;
+import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
+import com.wsei.healthcare.backend.auth.domain.AuthPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final UserPort userPort;
     private final TokenService tokenService;
     private final TokenRevocationService tokenRevocationService;
     private final AuthPort authPort;
@@ -21,28 +23,20 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public JwtResponse register(RegisterRequest registerRequest) {
-
-        //TODO: refactor to be working with user created event
-        Long createdUserId = userPort.createUser(registerRequest);
+    public void createAuthIdentity(AuthIdentityCreationRequest request) {
         identityRepository.save(
                 new AuthIdentity()
-                        .setUserId(createdUserId)
-                        .setEmail(registerRequest.email())
-                        .setPasswordHash(passwordEncoder.encode(registerRequest.password()))
+                        .setUserId(request.userId())
+                        .setEmail(request.email())
+                        .setPasswordHash(passwordEncoder.encode(request.password()))
                         .setEnabled(true)
                         .setAccountNonLocked(true)
         );
-        return authenticateAndBuildTokenResponse(registerRequest.email(), registerRequest.password());
     }
 
     @Override
-    public JwtResponse login(LoginRequest loginRequest) {
-        return authenticateAndBuildTokenResponse(loginRequest.email(), loginRequest.password());
-    }
-
-    private JwtResponse authenticateAndBuildTokenResponse(String email, String password) {
-        AppAuth auth = authPort.authenticate(email, password);
+    public JwtResponse authenticate(LoginRequest loginRequest) {
+        AppAuth auth = authPort.authenticate(loginRequest.email(), loginRequest.password());
         return tokenService.generateToken(auth);
     }
 

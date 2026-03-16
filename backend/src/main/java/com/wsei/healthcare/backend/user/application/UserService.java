@@ -1,11 +1,11 @@
 package com.wsei.healthcare.backend.user.application;
 
-import com.wsei.healthcare.backend.user.api.UserCreateRequest;
 import com.wsei.healthcare.backend.user.api.UserEmailUpdateRequest;
+import com.wsei.healthcare.backend.user.api.UserRegisterRequest;
+import com.wsei.healthcare.backend.user.api.UserResponse;
 
 public interface UserService {
-    //TODO: change from long to domain object
-    Long createUser(UserCreateRequest request);
+    UserResponse register(UserRegisterRequest request);
 
-    Long updateEmail(UserEmailUpdateRequest request);
+    UserResponse updateEmail(UserEmailUpdateRequest request);
 }

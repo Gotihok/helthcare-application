@@ -1,12 +1,12 @@
-package com.wsei.healthcare.backend.integration.auth;
+package com.wsei.healthcare.backend.auth.integration;
 
 import com.wsei.healthcare.backend.auth.api.LoginRequest;
-import com.wsei.healthcare.backend.auth.api.RegisterRequest;
 import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
+import com.wsei.healthcare.backend.auth.util.AuthConstants;
 import com.wsei.healthcare.backend.shared.integration.AbstractIntegrationalTest;
+import com.wsei.healthcare.backend.user.api.UserRegisterRequest;
 import com.wsei.healthcare.backend.user.domain.UserRepository;
-import com.wsei.healthcare.backend.util.auth.AuthConstants;
-import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,7 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
         }
     }
 
+    //TODO: extract call methods to helper class
     // JWT Auth verification
     protected void shouldAuthorize(String token) throws Exception {
         callTestEndpoint(token).andExpect(status().isOk());
@@ -63,13 +64,15 @@ public class AbstractAuthIT extends AbstractIntegrationalTest implements AuthCon
         return objectMapper.readTree(response).get("jwt").asString();
     }
 
-    // Auth endpoints
-    protected ResultActions performRegister(RegisterRequest request) throws Exception {
+    // User helper endpoint
+    // TODO: extract to user
+    protected ResultActions performRegister(UserRegisterRequest request) throws Exception {
         return mockMvc.perform(post(REGISTER_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
     }
 
+    // Auth endpoints
     protected ResultActions performLogin(LoginRequest request) throws Exception {
         return mockMvc.perform(post(LOGIN_URL)
                 .contentType(MediaType.APPLICATION_JSON)

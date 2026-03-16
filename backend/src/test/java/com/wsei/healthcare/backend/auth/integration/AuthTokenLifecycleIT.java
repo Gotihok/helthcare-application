@@ -1,7 +1,7 @@
-package com.wsei.healthcare.backend.integration.auth;
+package com.wsei.healthcare.backend.auth.integration;
 
-import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
+import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,9 +14,11 @@ public class AuthTokenLifecycleIT extends AbstractAuthIT {
         // 1. Access a protected endpoint without a valid token
         shouldReject("no_token_generated");
 
-        // 2. Register & extract token
+        // 2. Register & auth for the token
+        performRegister(RegisterRequestBuilder.getValidDefault().build())
+                .andExpect(status().isOk());
         String token = getToken(
-                performRegister(RegisterRequestBuilder.getValidDefault().build())
+                performLogin(LoginRequestBuilder.getValidDefault().build())
                         .andExpect(status().isOk())
         );
 

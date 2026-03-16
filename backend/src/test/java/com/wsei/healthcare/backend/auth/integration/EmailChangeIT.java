@@ -1,9 +1,9 @@
-package com.wsei.healthcare.backend.integration.auth;
+package com.wsei.healthcare.backend.auth.integration;
 
+import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
+import com.wsei.healthcare.backend.auth.util.UserEmailUpdateRequestBuilder;
 import com.wsei.healthcare.backend.user.api.UserEmailUpdateRequest;
-import com.wsei.healthcare.backend.util.auth.LoginRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.RegisterRequestBuilder;
-import com.wsei.healthcare.backend.util.auth.UserEmailUpdateRequestBuilder;
+import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -11,15 +11,18 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AuthIdentityChangeIT extends AbstractAuthIT {
+public class EmailChangeIT extends AbstractAuthIT {
 
+    //TODO: move
     private static final String UPDATE_EMAIL_URL = "/api/user/email";
 
     @Test
     void shouldAuthenticate_whenEmailChanged() throws Exception {
-        String token = getToken(
         performRegister(RegisterRequestBuilder.getValidDefault().build())
-                .andExpect(status().isOk())
+                .andExpect(status().isOk());
+        String token = getToken(
+                performLogin(LoginRequestBuilder.getValidDefault().build())
+                        .andExpect(status().isOk())
         );
 
         shouldAuthorize(token);

@@ -17,29 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 )
 public interface AuthApi {
 
-    @Operation(summary = "Register a new user")
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "User successfully registered",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = JwtResponse.class)
-                    )
-            ),
-            @ApiResponse(responseCode = "400", description = "Invalid registration data (validation error)"),
-            @ApiResponse(responseCode = "409", description = "User already exists")
-    })
-    JwtResponse register(
-            @RequestBody(
-                    description = "User register credentials",
-                    required = true,
-                    content = @Content(
-                            schema = @Schema(implementation = RegisterRequest.class)
-                    )
-            )
-            RegisterRequest request
-    );
+    void createAuthIdentity(AuthIdentityCreationRequest request);
 
     // ------------------------------------------------------------
 

@@ -24,7 +24,7 @@ logging:
   level:
     root: info
     com.wsei.healthcare: info
-    org.springframework.security.web.FilterChainProxy: trace
+#    org.springframework.security.web.FilterChainProxy: trace
 
 cors:
   allowed:
