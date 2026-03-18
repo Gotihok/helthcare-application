@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
+//TODO: implement endpoints:
+//      POST /auth/forgot-password — send password reset link
+//      POST /auth/reset-password — reset password using token
+//      POST /auth/change-password — change password (authenticated user)
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor

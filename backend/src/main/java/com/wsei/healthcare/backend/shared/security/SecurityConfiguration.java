@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/auth/login", "/api/user/register").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception

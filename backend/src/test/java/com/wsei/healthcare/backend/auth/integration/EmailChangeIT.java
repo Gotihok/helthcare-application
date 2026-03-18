@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmailChangeIT extends AbstractAuthIT {
 
     //TODO: move
-    private static final String UPDATE_EMAIL_URL = "/api/user/email";
+    private static final String UPDATE_EMAIL_URL = "/api/users/email";
 
     @Test
     void shouldAuthenticate_whenEmailChanged() throws Exception {

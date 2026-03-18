@@ -6,7 +6,7 @@ public interface AuthConstants {
     String TEST_STRING_ENDPOINT_URL = "/test/string";
 
     //TODO: move to user
-    String BASE_USER_URL = "/api/user";
+    String BASE_USER_URL = "/api/users";
     String REGISTER_URL = BASE_USER_URL + "/register";
 
     String BASE_AUTH_URL = "/api/auth";
