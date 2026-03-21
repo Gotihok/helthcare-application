@@ -42,6 +42,20 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/login-pacjent.html",
+                                "/login-lekarz.html",
+                                "/panel-pacjent.html",
+                                "/panel-lekarz.html",
+                                "/moj-lekarz.html",
+                                "/moje-wizyty.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/favicon.ico"
+                        ).permitAll()
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/logout").authenticated()
                         .anyRequest().authenticated()

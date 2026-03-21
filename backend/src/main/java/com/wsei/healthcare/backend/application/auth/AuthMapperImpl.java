@@ -13,6 +13,7 @@ public class AuthMapperImpl implements AuthMapper {
                 .lastName(registerRequest.lastName())
                 .email(registerRequest.email())
                 .password(registerRequest.password())
+                .role(registerRequest.role().trim().toUpperCase())
                 .build();
     }
 }

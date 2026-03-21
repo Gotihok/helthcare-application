@@ -6,6 +6,8 @@ import com.wsei.healthcare.backend.api.auth.RegisterRequest;
 import com.wsei.healthcare.backend.application.token.JwtTokenService;
 import com.wsei.healthcare.backend.application.token.TokenRevocationService;
 import com.wsei.healthcare.backend.application.user.UserService;
+import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserRepository;
 import com.wsei.healthcare.backend.infra.security.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenService jwtTokenService;
     private final TokenRevocationService tokenRevocationService;
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
     private final AuthMapper authMapper;
 
     @Override
@@ -44,9 +47,12 @@ public class AuthServiceImpl implements AuthService {
         );
 
         Jwt jwt = jwtTokenService.generateToken(authentication.getName());
+        AppUser user = userRepository.findAppUserByEmail(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Authenticated user not found"));
         return new JwtResponse(
                 jwt.getJwt(),
-                jwt.getExpiresAt()
+                jwt.getExpiresAt(),
+                user.getRole().name()
         );
     }
 

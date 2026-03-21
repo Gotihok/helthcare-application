@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentoCare | Panel pacjenta</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="container nav-wrap">
+        <a class="brand" href="/index.html">DentoCare</a>
+        <nav class="nav">
+            <a class="nav-link active" href="/panel-pacjent.html">Panel pacjenta</a>
+            <a class="nav-link" href="/panel-lekarz.html">Panel lekarza</a>
+        </nav>
+        <button id="logout-btn" class="btn ghost">Wyloguj</button>
+    </div>
+</header>
+<main class="section">
+    <div class="container">
+        <h1>Panel pacjenta</h1>
+        <p id="patient-email" class="section-text"></p>
+        <div class="profile-grid">
+            <article class="profile-card">
+                <h3>Umow nowa wizyte</h3>
+                <form id="book-appointment-form" class="auth-card compact">
+                    <input type="date" name="date" required>
+                    <input type="time" name="time" required>
+                    <input type="text" name="reason" placeholder="Powod wizyty" required>
+                    <button type="submit" class="btn primary">Zapisz na wizyte</button>
+                </form>
+            </article>
+            <article class="profile-card">
+                <h3>Moje e-recepty</h3>
+                <div id="prescriptions-list" class="visit-list"></div>
+            </article>
+        </div>
+        <h3>Moje wizyty</h3>
+        <div id="patient-appointments-list" class="visit-list"></div>
+    </div>
+</main>
+<script src="/js/patient-panel.js"></script>
+</body>
+</html>

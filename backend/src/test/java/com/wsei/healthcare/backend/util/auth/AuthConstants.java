@@ -18,6 +18,7 @@ public interface AuthConstants {
     String VALID_LAST_NAME = "lastName";
     String VALID_EMAIL = "email@example.com";
     String VALID_PASSWORD = "password";
+    String VALID_ROLE = "PATIENT";
 
     String INVALID_FIRST_NAME = "";
     String INVALID_LAST_NAME = "";

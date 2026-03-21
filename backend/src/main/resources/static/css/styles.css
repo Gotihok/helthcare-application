@@ -1,0 +1,342 @@
+:root {
+    --bg: #f3f8ff;
+    --panel: #ffffff;
+    --text: #0f2744;
+    --muted: #4d607a;
+    --primary: #1f7ae0;
+    --primary-dark: #195fb0;
+    --line: #d4e6ff;
+    --accent: #20c4b8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background:
+            radial-gradient(circle at top right, #dff4ff 0%, rgba(223, 244, 255, 0) 40%),
+            linear-gradient(180deg, #edf4ff 0%, #f8fbff 100%);
+}
+
+.container {
+    width: min(1120px, 92vw);
+    margin: 0 auto;
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+}
+
+.nav-wrap {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.brand {
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.28rem;
+    letter-spacing: 0.01em;
+    color: var(--primary);
+}
+
+.nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--muted);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #123256;
+    background: #e4f1ff;
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 10px 17px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(20, 67, 126, 0.14);
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn.primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn.ghost {
+    color: var(--primary);
+    background: #f4f9ff;
+    border-color: #bad8ff;
+}
+
+.hero {
+    padding: 74px 0 50px;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.eyebrow {
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+h1 {
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+
+.hero-text,
+.section-text {
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 70ch;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.hero-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 16px 36px rgba(21, 84, 163, 0.12);
+}
+
+.hero-card ul {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.section {
+    padding: 26px 0 60px;
+}
+
+.team-card {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 14px 30px rgba(21, 84, 163, 0.1);
+}
+
+.team-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+}
+
+.team-copy {
+    padding: 24px;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.service-card,
+.contact-box {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(21, 84, 163, 0.08);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.profile-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(21, 84, 163, 0.08);
+}
+
+.clean-list {
+    margin: 10px 0 18px;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.inline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.visit-list {
+    display: grid;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.visit-item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 20px rgba(21, 84, 163, 0.08);
+}
+
+.visit-item p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.status-badge {
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.planned {
+    color: #0c4a6e;
+    background: #e0f2fe;
+}
+
+.status-badge.done {
+    color: #0d766e;
+    background: #d9f9f7;
+}
+
+.auth-container {
+    max-width: 760px;
+}
+
+.auth-card {
+    display: grid;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.auth-card input {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.auth-card.compact {
+    margin-bottom: 0;
+}
+
+.footer {
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.88);
+}
+
+.footer-wrap {
+    min-height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    color: var(--muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+@media (max-width: 900px) {
+    .hero-grid,
+    .team-card,
+    .service-grid,
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-actions {
+        display: none;
+    }
+
+    .visit-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

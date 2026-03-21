@@ -8,6 +8,7 @@ public final class CreateUserCommandFactory implements UserConstants {
         return CreateUserCommand.builder()
                 .email(VALID_EMAIL)
                 .password(VALID_PASSWORD)
+                .role("PATIENT")
                 .build();
     }
 }

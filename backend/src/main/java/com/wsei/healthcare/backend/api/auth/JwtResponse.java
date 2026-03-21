@@ -17,5 +17,11 @@ public record JwtResponse(
                 description = "JWT expiration timestamp (UTC, ISO-8601)",
                 example = "2026-02-23T14:37:00Z"
         )
-        Instant expiresAt
+        Instant expiresAt,
+
+        @Schema(
+                description = "User role",
+                example = "PATIENT"
+        )
+        String role
 ) {}

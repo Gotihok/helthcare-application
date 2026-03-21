@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentoCare | Logowanie pacjenta</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<main class="section">
+    <div class="container auth-container">
+        <h1>Strefa pacjenta DentoCare</h1>
+        <p class="section-text">Zaloguj sie emailem i haslem albo utworz konto pacjenta.</p>
+        <form id="patient-login-form" class="auth-card">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Haslo" required>
+            <button type="submit" class="btn primary">Zaloguj jako pacjent</button>
+        </form>
+        <form id="patient-register-form" class="auth-card">
+            <input type="text" name="firstName" placeholder="Imie" required>
+            <input type="text" name="lastName" placeholder="Nazwisko" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Haslo" required>
+            <button type="submit" class="btn ghost">Zarejestruj konto pacjenta</button>
+        </form>
+        <p id="patient-auth-message" class="section-text"></p>
+        <a class="nav-link" href="/index.html">Powrot na main</a>
+    </div>
+</main>
+<script src="/js/auth.js"></script>
+</body>
+</html>

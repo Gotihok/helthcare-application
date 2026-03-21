@@ -12,6 +12,7 @@ public class RegisterRequestBuilder implements AuthConstants {
     private String lastName;
     private String email;
     private String password;
+    private String role;
 
     private RegisterRequestBuilder() {}
 
@@ -21,6 +22,7 @@ public class RegisterRequestBuilder implements AuthConstants {
         builder.lastName = VALID_LAST_NAME;
         builder.email = VALID_EMAIL;
         builder.password = VALID_PASSWORD;
+        builder.role = VALID_ROLE;
         return builder;
     }
 
@@ -30,10 +32,11 @@ public class RegisterRequestBuilder implements AuthConstants {
         builder.lastName = INVALID_LAST_NAME;
         builder.email = INVALID_EMAIL;
         builder.password = INVALID_PASSWORD;
+        builder.role = VALID_ROLE;
         return builder;
     }
 
     public RegisterRequest build() {
-        return new RegisterRequest(firstName, lastName, email, password);
+        return new RegisterRequest(firstName, lastName, email, password, role);
     }
 }

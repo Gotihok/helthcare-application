@@ -31,4 +31,8 @@ public class AppUser {
 
     @Column(nullable = false)
     private boolean accountNonLocked = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role = UserRole.PATIENT;
 }

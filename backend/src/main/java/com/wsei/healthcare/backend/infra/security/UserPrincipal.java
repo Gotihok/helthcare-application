@@ -1,10 +1,12 @@
 package com.wsei.healthcare.backend.infra.security;
 
 import com.wsei.healthcare.backend.domain.user.AppUser;
+import com.wsei.healthcare.backend.domain.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -17,19 +19,25 @@ public class UserPrincipal implements UserDetails {
     private final String password;
     private final boolean enabled;
     private final boolean accountNonLocked;
+    private final UserRole role;
 
     public static UserPrincipal from(AppUser user) {
         return new UserPrincipal(
                 user.getEmail(),
                 user.getPassword(),
                 user.isEnabled(),
-                user.isAccountNonLocked()
+                user.isAccountNonLocked(),
+                user.getRole()
         );
     }
 
     @Override
     public @NullMarked Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    public UserRole getRole() {
+        return role;
     }
 
     @Override

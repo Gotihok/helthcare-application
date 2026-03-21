@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentoCare | Panel lekarza</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="container nav-wrap">
+        <a class="brand" href="/index.html">DentoCare</a>
+        <nav class="nav">
+            <a class="nav-link" href="/panel-pacjent.html">Panel pacjenta</a>
+            <a class="nav-link active" href="/panel-lekarz.html">Panel lekarza</a>
+        </nav>
+        <button id="logout-btn" class="btn ghost">Wyloguj</button>
+    </div>
+</header>
+<main class="section">
+    <div class="container">
+        <h1>Panel lekarza</h1>
+        <p id="doctor-email" class="section-text"></p>
+        <h3>Dzisiejszy grafik</h3>
+        <div id="doctor-appointments-list" class="visit-list"></div>
+    </div>
+</main>
+<script src="/js/doctor-panel.js"></script>
+</body>
+</html>

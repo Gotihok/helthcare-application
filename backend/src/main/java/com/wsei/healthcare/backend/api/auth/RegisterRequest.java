@@ -38,5 +38,12 @@ public record RegisterRequest(
                 example = "P@ssw0rd123",
                 accessMode = Schema.AccessMode.WRITE_ONLY
         )
-        String password
+        String password,
+
+        @NotBlank
+        @Schema(
+                description = "User role: PATIENT or DOCTOR",
+                example = "PATIENT"
+        )
+        String role
 ) {}
