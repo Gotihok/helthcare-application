@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -30,36 +28,5 @@ public class UserController {
             Authentication authentication
     ) {
         return ResponseEntity.ok(userApi.updateUserEmail(request, authentication.getName()));
-    }
-
-    //TODO: implement
-    @GetMapping("/me")
-    public ResponseEntity<UserResponse> getAuthenticatedUser(Authentication auth) {
-        return null;
-    }
-
-    //TODO: implement
-    @PostMapping("/me")
-    public ResponseEntity<UserResponse> updateAuthenticatedUser(Authentication auth) {
-        return null;
-    }
-
-    //TODO: implement
-    @DeleteMapping("/me")
-    public ResponseEntity<UserResponse> deleteAuthenticatedUser(Authentication auth) {
-        return null;
-    }
-
-    //TODO: implement
-    //TODO: add pagination
-    @GetMapping("")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        return null;
-    }
-
-    //TODO: implement
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        return null;
     }
 }
