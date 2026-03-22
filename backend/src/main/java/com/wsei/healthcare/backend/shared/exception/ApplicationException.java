@@ -7,10 +7,6 @@ public abstract class ApplicationException extends RuntimeException {
         super(message);
     }
 
-    public ApplicationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public abstract String getErrorCode();
 
     public abstract HttpStatus getHttpStatus();

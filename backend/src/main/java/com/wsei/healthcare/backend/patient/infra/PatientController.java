@@ -1,47 +1,77 @@
 package com.wsei.healthcare.backend.patient.infra;
 
+import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
+import com.wsei.healthcare.backend.patient.api.PatientApi;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
+import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
+@RequiredArgsConstructor
 public class PatientController {
 
-    //TODO: implement
-    @GetMapping("/me")
-    public ResponseEntity<PatientProfileResponse> getAuthenticatedPatient(Authentication auth) {
-        return null;
+    private final PatientApi patientApi;
+
+    //TODO: add patient profile creation/registration
+
+    @PostMapping("/me/register")
+    public ResponseEntity<PatientProfileResponse> createPatientProfile(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestBody PatientCreationRequest request
+    ) {
+        return ResponseEntity.ok(
+                patientApi.createPatientProfile(userPrincipal.getUserId(), request)
+        );
     }
 
-    //TODO: implement
     @PostMapping("/me")
-    public ResponseEntity<PatientProfileResponse> updateAuthenticatedPatient(Authentication auth) {
-        return null;
+    public ResponseEntity<PatientProfileResponse> updateAuthenticatedPatientProfile(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestBody PatientProfileUpdateRequest request
+    ) {
+        return ResponseEntity.ok(
+                patientApi.updatePatientProfileById(userPrincipal.getUserId(), request)
+        );
     }
 
-    //TODO: implement
+    @GetMapping("/me")
+    public ResponseEntity<PatientProfileResponse> getAuthenticatedPatientProfile(
+            @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
+        return ResponseEntity.ok(
+                patientApi.getPatientProfileByUserId(userPrincipal.getUserId())
+        );
+    }
+
     @DeleteMapping("/me")
-    public ResponseEntity<PatientProfileResponse> deleteAuthenticatedPatient(Authentication auth) {
-        return null;
+    public ResponseEntity<Void> deleteAuthenticatedPatientProfile(
+            @AuthenticationPrincipal UserPrincipal userPrincipal
+    ) {
+        patientApi.deletePatientProfileByUserId(userPrincipal.getUserId());
+        return ResponseEntity.noContent().build();
     }
 
-    //TODO: implement
     @PostMapping("/me/doctor/{doctorId}")
     public ResponseEntity<PatientProfileResponse> setPersonalDoctor(
-            Authentication auth,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long doctorId
     ) {
-        return null;
+        return ResponseEntity.ok(
+                patientApi.setPersonalDoctorByUserId(userPrincipal.getUserId(), doctorId)
+        );
     }
 
     //TODO: add all (paginated) prescriptions retrieval or maybe just return it in PatientProfileResponse
     //TODO: add visits management endpoints
 
     //TODO: implement
+    //TODO: change to public dto (other users profiles)
     @GetMapping("/{id}")
     public ResponseEntity<PatientProfileResponse> findPatientById(@PathVariable Long id) {
         return null;
@@ -49,7 +79,8 @@ public class PatientController {
 
     //TODO: implement
     //TODO: add pagination
-    //TODO: maybe change to admin only
+    //TODO: maybe change to admin/doctor only
+    //TODO: change to public dto (other users profiles)
     @GetMapping("")
     public ResponseEntity<List<PatientProfileResponse>> getAllPatients() {
         return null;

@@ -7,10 +7,6 @@ public abstract class AlreadyExistsAppException extends ApplicationException {
         super(message);
     }
 
-    public AlreadyExistsAppException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.CONFLICT;

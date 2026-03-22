@@ -7,10 +7,6 @@ public abstract class ForbiddenOperationException extends ApplicationException {
         super(message);
     }
 
-    public ForbiddenOperationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.FORBIDDEN;

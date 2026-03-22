@@ -4,6 +4,6 @@ import com.wsei.healthcare.backend.user.api.UserResponse;
 
 public record DoctorProfileResponse(
         UserResponse userProfile,
-        DoctorProfile doctorProfile
+        DoctorDetailsResponse doctorProfile
 ) {
 }

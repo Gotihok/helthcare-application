@@ -7,10 +7,6 @@ public abstract class NotFoundAppException extends ApplicationException {
         super(message);
     }
 
-    public NotFoundAppException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.NOT_FOUND;

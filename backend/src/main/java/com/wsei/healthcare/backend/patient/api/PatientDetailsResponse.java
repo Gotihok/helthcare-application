@@ -1,4 +1,4 @@
 package com.wsei.healthcare.backend.patient.api;
 
-public record PatientProfile() {
+public record PatientDetailsResponse() {
 }

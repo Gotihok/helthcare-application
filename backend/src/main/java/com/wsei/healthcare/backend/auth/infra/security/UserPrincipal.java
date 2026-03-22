@@ -1,6 +1,7 @@
 package com.wsei.healthcare.backend.auth.infra.security;
 
 import com.wsei.healthcare.backend.auth.domain.AuthIdentity;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
@@ -13,6 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserPrincipal implements UserDetails {
 
+    @Getter
+    private final Long userId;
     private final String email;
     private final String password;
     private final boolean enabled;
@@ -20,6 +23,7 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal from(AuthIdentity identity) {
         return new UserPrincipal(
+                identity.getUserId(),
                 identity.getEmail(),
                 identity.getPasswordHash(),
                 identity.isEnabled(),

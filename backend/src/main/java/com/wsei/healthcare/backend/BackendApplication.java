@@ -11,6 +11,8 @@ public class BackendApplication {
     //TODO: implement admin
     //TODO: rework the whole app id's to UUID
 
+    //TODO: inline facade with service in all module (facade is unnecessary abstraction)
+
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }

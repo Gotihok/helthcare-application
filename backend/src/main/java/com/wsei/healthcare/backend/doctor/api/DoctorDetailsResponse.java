@@ -1,4 +1,4 @@
 package com.wsei.healthcare.backend.doctor.api;
 
-public record DoctorProfile() {
+public record DoctorDetailsResponse() {
 }

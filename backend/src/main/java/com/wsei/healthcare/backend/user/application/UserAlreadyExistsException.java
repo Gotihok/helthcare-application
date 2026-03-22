@@ -7,10 +7,6 @@ public class UserAlreadyExistsException extends AlreadyExistsAppException {
         super(message);
     }
 
-    public UserAlreadyExistsException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     @Override
     public String getErrorCode() {
         return "USER_ALREADY_EXISTS";
