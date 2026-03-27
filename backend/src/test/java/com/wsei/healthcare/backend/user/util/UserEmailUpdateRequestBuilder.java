@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.auth.util;
+package com.wsei.healthcare.backend.user.util;
 
 import com.wsei.healthcare.backend.user.api.UserEmailUpdateRequest;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class UserEmailUpdateRequestBuilder {
 
     private UserEmailUpdateRequestBuilder() {}
 
-    public static UserEmailUpdateRequestBuilder getEmptyDefault() {
+    public static UserEmailUpdateRequestBuilder getEmpty() {
         return new UserEmailUpdateRequestBuilder();
     }
 

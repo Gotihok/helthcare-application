@@ -2,6 +2,7 @@ package com.wsei.healthcare.backend.patient.infra;
 
 import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
 import com.wsei.healthcare.backend.patient.api.PatientApi;
+import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
 import lombok.RequiredArgsConstructor;

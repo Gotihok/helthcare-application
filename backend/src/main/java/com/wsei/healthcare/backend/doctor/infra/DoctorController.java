@@ -19,7 +19,7 @@ public class DoctorController {
 
     private final DoctorApi doctorApi;
 
-    ///TODO: add role guard or other security mechanism to prevent unauthorized users from registering as doctors
+    //TODO: add role guard or other security mechanism to prevent unauthorized users from registering as doctors
     @PostMapping("/me/register")
     public ResponseEntity<DoctorProfileResponse> createDoctorProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
@@ -80,14 +80,14 @@ public class DoctorController {
     //TODO: add all (paginated) prescriptions retrieval or maybe just return it in DoctorProfileResponse
     //TODO: add visits management endpoints
 
-    ///TODO: implement
+    //TODO: implement
     @GetMapping("/{id}")
     public ResponseEntity<DoctorProfileResponse> findDoctorById(@PathVariable Long id) {
         return null;
     }
 
-    ///TODO: implement
-    ///TODO: add pagination
+    //TODO: implement
+    //TODO: add pagination
     @GetMapping("")
     public ResponseEntity<List<DoctorProfileResponse>> getAllDoctors() {
         return null;

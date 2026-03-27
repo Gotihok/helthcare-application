@@ -4,7 +4,7 @@ import com.wsei.healthcare.backend.patient.api.PatientDetailsResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
 import com.wsei.healthcare.backend.patient.domain.Patient;
-import com.wsei.healthcare.backend.patient.infra.PatientCreationRequest;
+import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.user.application.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

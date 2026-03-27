@@ -1,7 +1,5 @@
 package com.wsei.healthcare.backend.patient.api;
 
-import com.wsei.healthcare.backend.patient.infra.PatientCreationRequest;
-
 public interface PatientApi {
     PatientProfileResponse createPatientProfile(Long userId, PatientCreationRequest request);
 

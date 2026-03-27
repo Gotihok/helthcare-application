@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Setter
 @Accessors(chain = true)
-public class RegisterRequestBuilder implements UserConstants {
+public class RegisterRequestBuilder {
 
     private String firstName;
     private String lastName;
@@ -21,23 +21,23 @@ public class RegisterRequestBuilder implements UserConstants {
 
     public static RegisterRequestBuilder getValidDefault() {
         RegisterRequestBuilder builder = new RegisterRequestBuilder();
-        builder.firstName = VALID_FIRST_NAME;
-        builder.lastName = VALID_LAST_NAME;
-        builder.email = VALID_EMAIL;
-        builder.password = VALID_PASSWORD;
-        builder.phoneNumber = VALID_PHONE_NUMBER;
-        builder.birthDate = VALID_BIRTH_DATE;
+        builder.firstName = UserTestDataProvider.validFirstName();
+        builder.lastName = UserTestDataProvider.validLastName();
+        builder.email = UserTestDataProvider.validEmail();
+        builder.password = UserTestDataProvider.validPassword();
+        builder.phoneNumber = UserTestDataProvider.validPhoneNumber();
+        builder.birthDate = UserTestDataProvider.validBirthDate();
         return builder;
     }
 
     public static RegisterRequestBuilder getInvalidDefault() {
         RegisterRequestBuilder builder = new RegisterRequestBuilder();
-        builder.firstName = INVALID_FIRST_NAME;
-        builder.lastName = INVALID_LAST_NAME;
-        builder.email = INVALID_EMAIL;
-        builder.password = INVALID_PASSWORD;
-        builder.phoneNumber = INVALID_PHONE_NUMBER;
-        builder.birthDate = INVALID_BIRTH_DATE;
+        builder.firstName = UserTestDataProvider.invalidFirstName();
+        builder.lastName = UserTestDataProvider.invalidLastName();
+        builder.email = UserTestDataProvider.invalidEmail();
+        builder.password = UserTestDataProvider.invalidPassword();
+        builder.phoneNumber = UserTestDataProvider.invalidPhoneNumber();
+        builder.birthDate = UserTestDataProvider.invalidBirthDate();
         return builder;
     }
 

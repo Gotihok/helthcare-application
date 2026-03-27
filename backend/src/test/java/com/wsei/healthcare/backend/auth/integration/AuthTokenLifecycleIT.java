@@ -12,33 +12,33 @@ public class AuthTokenLifecycleIT extends AbstractAuthIT {
     void shouldHandleFullJwtLifecycle() throws Exception {
 
         // 1. Access a protected endpoint without a valid token
-        shouldReject("no_token_generated");
+        authWebHelper.shouldReject("no_token_generated");
 
         // 2. Register & auth for the token
-        performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isOk());
-        String token = getToken(
-                performLogin(LoginRequestBuilder.getValidDefault().build())
+        String token = authWebHelper.getToken(
+                authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())
                         .andExpect(status().isOk())
         );
 
         // 3. Access protected endpoint with the token
-        shouldAuthorize(token);
+        authWebHelper.shouldAuthorize(token);
 
         // 4. Logout
-        performLogout(token)
+        authWebHelper.performLogout(token)
                 .andExpect(status().isNoContent());
 
         // 5. Old token must be rejected
-        shouldReject(token);
+        authWebHelper.shouldReject(token);
 
         // 6. Login
-        String newToken = getToken(
-                performLogin(LoginRequestBuilder.getValidDefault().build())
+        String newToken = authWebHelper.getToken(
+                authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())
                         .andExpect(status().isOk())
         );
 
         // 7. New token works
-        shouldAuthorize(newToken);
+        authWebHelper.shouldAuthorize(newToken);
     }
 }

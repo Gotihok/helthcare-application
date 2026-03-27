@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Setter
 @Accessors(chain = true)
-public class LoginRequestBuilder implements AuthConstants {
+public class LoginRequestBuilder {
 
     private String email;
     private String password;
@@ -15,15 +15,15 @@ public class LoginRequestBuilder implements AuthConstants {
 
     public static LoginRequestBuilder getValidDefault() {
         LoginRequestBuilder builder = new LoginRequestBuilder();
-        builder.email = VALID_EMAIL;
-        builder.password = VALID_PASSWORD;
+        builder.email = AuthTestDataProvider.validEmail();
+        builder.password = AuthTestDataProvider.validPassword();
         return builder;
     }
 
     public static LoginRequestBuilder getInvalidDefault() {
         LoginRequestBuilder builder = new LoginRequestBuilder();
-        builder.email = INVALID_EMAIL;
-        builder.password = INVALID_PASSWORD;
+        builder.email = AuthTestDataProvider.invalidEmail();
+        builder.password = AuthTestDataProvider.invalidPassword();
         return builder;
     }
 

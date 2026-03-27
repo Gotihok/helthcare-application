@@ -1,4 +1,4 @@
-package com.wsei.healthcare.backend.auth.integration;
+package com.wsei.healthcare.backend.user.integration;
 
 import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
 import com.wsei.healthcare.backend.auth.util.AuthWebHelper;
@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AbstractAuthIT extends AbstractIntegrationalTest {
+public class AbstractUserIT extends AbstractIntegrationalTest {
 
     @Autowired
     protected UserRepository userRepository;
