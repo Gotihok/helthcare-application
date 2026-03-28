@@ -1,3 +1,21 @@
+//plugins {
+//    id("com.github.node-gradle.node") version "7.0.2"
+//}
+//
+//node {
+//    version = "24.14.1"
+//    npmVersion = "11.7.0"
+//    download = true
+//}
+//
+//tasks.register('buildFrontend') {
+//    dependsOn 'npm_run_build'
+//}
+//
+//tasks.register('startFrontend') {
+//    dependsOn 'npm_run_start'
+//}
+
 tasks.register("buildBackend") {
     dependsOn(":backend:build")
 }

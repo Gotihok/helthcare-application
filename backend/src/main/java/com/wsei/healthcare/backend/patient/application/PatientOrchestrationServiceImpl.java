@@ -42,5 +42,13 @@ public class PatientOrchestrationServiceImpl implements PatientOrchestrationServ
                 patientDto,
                 doctorDto
         );
+
+        //map patient to dto
+
+        //collect id of users
+        //retrieving users details
+
+        //collect id of profiles
+        //retrieving users profiles
     }
 }
