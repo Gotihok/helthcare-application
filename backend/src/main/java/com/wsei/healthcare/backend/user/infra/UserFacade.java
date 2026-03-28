@@ -22,4 +22,9 @@ public class UserFacade implements UserApi {
     public UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest, String authName) {
         return userService.updateEmail(userEmailUpdateRequest, authName);
     }
+
+    @Override
+    public UserResponse getById(Long id) {
+        return userService.getById(id);
+    }
 }

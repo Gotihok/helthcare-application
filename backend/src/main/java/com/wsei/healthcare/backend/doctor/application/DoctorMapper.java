@@ -16,11 +16,9 @@ public class DoctorMapper {
 
     private final UserMapper userMapper;
 
+    //TODO: remove and add orchestrator
     public DoctorProfileResponse toProfileDto(Doctor entity) {
-        return new DoctorProfileResponse(
-                userMapper.toDto(entity.getUser()),
-                toDto(entity)
-        );
+        return null;
     }
 
     //TODO: implement properly

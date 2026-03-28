@@ -8,4 +8,6 @@ public interface UserService {
     UserResponse register(UserRegisterRequest request);
 
     UserResponse updateEmail(UserEmailUpdateRequest request, String authName);
+
+    UserResponse getById(Long id);
 }

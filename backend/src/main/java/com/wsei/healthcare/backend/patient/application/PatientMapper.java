@@ -1,10 +1,10 @@
 package com.wsei.healthcare.backend.patient.application;
 
+import com.wsei.healthcare.backend.doctor.application.DoctorMapper;
+import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.patient.api.PatientDetailsResponse;
-import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
 import com.wsei.healthcare.backend.patient.domain.Patient;
-import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.user.application.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,17 +15,13 @@ import org.springframework.stereotype.Component;
 public class PatientMapper {
 
     private final UserMapper userMapper;
-
-    public PatientProfileResponse toProfileDto(Patient entity) {
-        return new PatientProfileResponse(
-                userMapper.toDto(entity.getUser()),
-                toDto(entity)
-        );
-    }
+    private final DoctorMapper doctorMapper;
 
     //TODO: implement properly
     public PatientDetailsResponse toDto(Patient entity) {
-        return new PatientDetailsResponse();
+        return new PatientDetailsResponse(
+                entity.getId()
+                );
     }
 
     //TODO: implement properly

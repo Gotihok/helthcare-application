@@ -1,10 +1,10 @@
 package com.wsei.healthcare.backend.doctor.infra;
 
 import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
-import com.wsei.healthcare.backend.doctor.api.DoctorApi;
 import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
+import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorController {
 
-    private final DoctorApi doctorApi;
+    private final DoctorPublicApi doctorPublicApi;
 
     //TODO: add role guard or other security mechanism to prevent unauthorized users from registering as doctors
     @PostMapping("/me/register")
@@ -26,7 +26,7 @@ public class DoctorController {
             @RequestBody DoctorCreationRequest request
     ) {
         return ResponseEntity.ok(
-                doctorApi.createDoctorProfile(userPrincipal.getUserId(), request)
+                doctorPublicApi.createDoctorProfile(userPrincipal.getUserId(), request)
         );
     }
 
@@ -36,7 +36,7 @@ public class DoctorController {
             @RequestBody DoctorProfileUpdateRequest request
     ) {
         return ResponseEntity.ok(
-                doctorApi.updateDoctorProfile(userPrincipal.getUserId(), request)
+                doctorPublicApi.updateDoctorProfile(userPrincipal.getUserId(), request)
         );
     }
 
@@ -45,7 +45,7 @@ public class DoctorController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         return ResponseEntity.ok(
-                doctorApi.getDoctorProfileByUserId(userPrincipal.getUserId())
+                doctorPublicApi.getDoctorProfileByUserId(userPrincipal.getUserId())
         );
     }
 
@@ -53,7 +53,7 @@ public class DoctorController {
     public ResponseEntity<DoctorProfileResponse> deleteAuthenticatedDoctorProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        doctorApi.deleteDoctorProfileByUserId(userPrincipal.getUserId());
+        doctorPublicApi.deleteDoctorProfileByUserId(userPrincipal.getUserId());
         return ResponseEntity.noContent().build();
     }
 
@@ -63,7 +63,7 @@ public class DoctorController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long patientId
     ) {
-        doctorApi.addPatientForDoctor(userPrincipal.getUserId(), patientId);
+        doctorPublicApi.addPatientForDoctor(userPrincipal.getUserId(), patientId);
         return ResponseEntity.ok().build();
     }
 
@@ -73,7 +73,7 @@ public class DoctorController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long patientId
     ) {
-        doctorApi.removePatientForDoctor(userPrincipal.getUserId(), patientId);
+        doctorPublicApi.removePatientForDoctor(userPrincipal.getUserId(), patientId);
         return ResponseEntity.ok().build();
     }
 

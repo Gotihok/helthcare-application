@@ -1,7 +1,5 @@
 package com.wsei.healthcare.backend.patient.domain;
 
-import com.wsei.healthcare.backend.doctor.domain.Doctor;
-import com.wsei.healthcare.backend.user.domain.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,13 +14,9 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private AppUser user;
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id")
-    private Doctor personalDoctor;
+    private Long personalDoctorId;
 
     //TODO: add visits info with relations
     //TODO: add active prescriptions relation (updatable with each retrieval)

@@ -1,10 +1,10 @@
 package com.wsei.healthcare.backend.patient.infra;
 
 import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
-import com.wsei.healthcare.backend.patient.api.PatientApi;
 import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
+import com.wsei.healthcare.backend.patient.api.PatientPublicApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,9 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientController {
 
-    private final PatientApi patientApi;
-
-    //TODO: add patient profile creation/registration
+    private final PatientPublicApi patientPublicApi;
 
     @PostMapping("/me/register")
     public ResponseEntity<PatientProfileResponse> createPatientProfile(
@@ -27,7 +25,7 @@ public class PatientController {
             @RequestBody PatientCreationRequest request
     ) {
         return ResponseEntity.ok(
-                patientApi.createPatientProfile(userPrincipal.getUserId(), request)
+                patientPublicApi.createPatientProfile(userPrincipal.getUserId(), request)
         );
     }
 
@@ -37,7 +35,7 @@ public class PatientController {
             @RequestBody PatientProfileUpdateRequest request
     ) {
         return ResponseEntity.ok(
-                patientApi.updatePatientProfileById(userPrincipal.getUserId(), request)
+                patientPublicApi.updatePatientProfileById(userPrincipal.getUserId(), request)
         );
     }
 
@@ -46,7 +44,7 @@ public class PatientController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         return ResponseEntity.ok(
-                patientApi.getPatientProfileByUserId(userPrincipal.getUserId())
+                patientPublicApi.getPatientProfileByUserId(userPrincipal.getUserId())
         );
     }
 
@@ -54,7 +52,7 @@ public class PatientController {
     public ResponseEntity<Void> deleteAuthenticatedPatientProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        patientApi.deletePatientProfileByUserId(userPrincipal.getUserId());
+        patientPublicApi.deletePatientProfileByUserId(userPrincipal.getUserId());
         return ResponseEntity.noContent().build();
     }
 
@@ -64,7 +62,7 @@ public class PatientController {
             @PathVariable Long doctorId
     ) {
         return ResponseEntity.ok(
-                patientApi.setPersonalDoctorByUserId(userPrincipal.getUserId(), doctorId)
+                patientPublicApi.setPersonalDoctorByUserId(userPrincipal.getUserId(), doctorId)
         );
     }
 

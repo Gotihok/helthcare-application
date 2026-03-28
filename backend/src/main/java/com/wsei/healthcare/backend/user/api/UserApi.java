@@ -38,4 +38,6 @@ public interface UserApi {
 //    UserResponse createUser(UserCreateRequest userCreateRequest);
 
     UserResponse updateUserEmail(UserEmailUpdateRequest userEmailUpdateRequest, String authName);
+
+    UserResponse getById(Long id);
 }

@@ -1,34 +1,35 @@
 package com.wsei.healthcare.backend.patient.application;
 
-import com.wsei.healthcare.backend.doctor.domain.Doctor;
-import com.wsei.healthcare.backend.patient.api.PatientApi;
+import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
+import com.wsei.healthcare.backend.patient.api.PatientPublicApi;
 import com.wsei.healthcare.backend.patient.domain.Patient;
 import com.wsei.healthcare.backend.patient.domain.PatientRepository;
-import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
-import com.wsei.healthcare.backend.user.domain.AppUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class PatientFacade implements PatientApi {
+public class PatientPublicFacade implements PatientPublicApi {
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final PatientOrchestrationService orchestrator;
 
     @Override
     public PatientProfileResponse createPatientProfile(Long userId, PatientCreationRequest request) {
         if (patientRepository.existsByUserId(userId))
-            throw new PatientAlreadyExistsException("Patient profile already exists");
+            throw new PatientAlreadyExistsException("Patient profile already registered for this user");
 
         Patient newPatient = patientMapper.toEntity(request);
-        newPatient.setUser(new AppUser().setId(userId));
+        newPatient.setUserId(userId);
 
         Patient savedPatient = patientRepository.save(newPatient);
-        return patientMapper.toProfileDto(savedPatient);
+        return orchestrator.buildPatientProfile(savedPatient);
     }
 
     @Override
@@ -38,14 +39,14 @@ public class PatientFacade implements PatientApi {
         Patient updatedPatient = patientMapper.toEntity(oldPatientEntity, request);
 
         Patient savedPatient = patientRepository.save(updatedPatient);
-        return patientMapper.toProfileDto(savedPatient);
+        return orchestrator.buildPatientProfile(savedPatient);
     }
 
     @Override
     public PatientProfileResponse getPatientProfileByUserId(Long userId) {
         Patient patient = patientRepository.findByUserId(userId)
                 .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
-        return patientMapper.toProfileDto(patient);
+        return orchestrator.buildPatientProfile(patient);
     }
 
     //TODO: implement or remove completely
@@ -60,27 +61,27 @@ public class PatientFacade implements PatientApi {
         Patient patient = patientRepository.findByUserId(userId)
                 .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
 
-        patient.setPersonalDoctor(new Doctor().setId(doctorId));
+        patient.setPersonalDoctorId(doctorId);
         Patient savedPatient = patientRepository.save(patient);
 
-        return patientMapper.toProfileDto(savedPatient);
+        return orchestrator.buildPatientProfile(savedPatient);
     }
 
-    @Override
-    public void setPersonalDoctorByPatientId(Long patientId, Long doctorId) {
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
-
-        patient.setPersonalDoctor(new Doctor().setId(doctorId));
-        patientRepository.save(patient);
-    }
-
-    @Override
-    public void removePersonalDoctorByPatientId(Long patientId, Long doctorId) {
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
-
-        patient.setPersonalDoctor(null);
-        patientRepository.save(patient);
-    }
+//    @Override
+//    public void setPersonalDoctorByPatientId(Long patientId, Long doctorId) {
+//        Patient patient = patientRepository.findById(patientId)
+//                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
+//
+//        patient.setPersonalDoctorId(doctorId);
+//        patientRepository.save(patient);
+//    }
+//
+//    @Override
+//    public void removePersonalDoctorByPatientId(Long patientId, Long doctorId) {
+//        Patient patient = patientRepository.findById(patientId)
+//                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
+//
+//        patient.setPersonalDoctorId(null);
+//        patientRepository.save(patient);
+//    }
 }
