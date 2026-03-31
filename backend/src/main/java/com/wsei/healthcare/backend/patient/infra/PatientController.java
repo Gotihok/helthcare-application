@@ -29,7 +29,7 @@ public class PatientController {
         );
     }
 
-    @PostMapping("/me")
+    @PostMapping("/me/update")
     public ResponseEntity<PatientProfileResponse> updateAuthenticatedPatientProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestBody PatientProfileUpdateRequest request

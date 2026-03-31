@@ -1,14 +1,19 @@
 package com.wsei.healthcare.backend.auth.integration;
 
 import com.wsei.healthcare.backend.auth.domain.AuthIdentity;
+import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
 import com.wsei.healthcare.backend.auth.util.AuthTestDataProvider;
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
 import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginIT extends AbstractAuthIT {
+
+    @Autowired
+    protected AuthIdentityRepository authIdentityRepository;
 
     @Test
     void login_shouldAuthenticateUser_whenValidCredentials() throws Exception {
