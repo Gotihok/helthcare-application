@@ -37,6 +37,7 @@ public class AuthWebHelper {
 
     private ResultActions callTestEndpoint(String token) throws Exception {
         return mockMvc.perform(get(TEST_STRING_ENDPOINT_URL)
+                .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token));
     }
 
@@ -49,6 +50,7 @@ public class AuthWebHelper {
 
     public ResultActions performLogout(String token) throws Exception {
         return mockMvc.perform(post(LOGOUT_URL)
+                .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token));
     }
 

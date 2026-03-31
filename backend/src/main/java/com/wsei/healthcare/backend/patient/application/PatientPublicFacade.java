@@ -8,7 +8,6 @@ import com.wsei.healthcare.backend.patient.domain.Patient;
 import com.wsei.healthcare.backend.patient.domain.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -49,10 +48,11 @@ public class PatientPublicFacade implements PatientPublicApi {
         return orchestrator.buildPatientProfile(patient);
     }
 
-    //TODO: implement or remove completely
     @Override
     public void deletePatientProfileByUserId(Long userId) {
-        throw new NotImplementedException("Patient deletion is not implemented yet");
+        Patient patient = patientRepository.findByUserId(userId)
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
+        patientRepository.deleteById(patient.getId());
     }
 
     //TODO: extract boilerplate
@@ -66,22 +66,4 @@ public class PatientPublicFacade implements PatientPublicApi {
 
         return orchestrator.buildPatientProfile(savedPatient);
     }
-
-//    @Override
-//    public void setPersonalDoctorByPatientId(Long patientId, Long doctorId) {
-//        Patient patient = patientRepository.findById(patientId)
-//                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
-//
-//        patient.setPersonalDoctorId(doctorId);
-//        patientRepository.save(patient);
-//    }
-//
-//    @Override
-//    public void removePersonalDoctorByPatientId(Long patientId, Long doctorId) {
-//        Patient patient = patientRepository.findById(patientId)
-//                .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
-//
-//        patient.setPersonalDoctorId(null);
-//        patientRepository.save(patient);
-//    }
 }

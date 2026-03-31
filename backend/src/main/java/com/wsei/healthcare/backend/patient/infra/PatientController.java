@@ -78,7 +78,7 @@ public class PatientController {
 
     //TODO: implement
     //TODO: add pagination
-    //TODO: maybe change to admin/doctor only
+    //TODO: maybe change to admin/personalDoctor only
     //TODO: change to public dto (other users profiles)
     @GetMapping("")
     public ResponseEntity<List<PatientProfileResponse>> getAllPatients() {

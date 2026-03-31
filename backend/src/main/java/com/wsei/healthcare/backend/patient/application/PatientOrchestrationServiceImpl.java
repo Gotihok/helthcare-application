@@ -28,7 +28,7 @@ public class PatientOrchestrationServiceImpl implements PatientOrchestrationServ
         PatientDetailsResponse patientDto = patientMapper.toDto(patient);
         UserResponse userDto = userApi.getById(patient.getUserId());
 
-        //TODO: change to thin doctor public view
+        //TODO: change to thin personalDoctor public view
         //TODO: make helper method to create optional responses with NotFoundEx processing
         DoctorProfileResponse doctorDto;
         try {
