@@ -15,6 +15,7 @@
 //tasks.register('startFrontend') {
 //    dependsOn 'npm_run_start'
 //}
+// TEST COMMENT
 
 tasks.register("buildBackend") {
     dependsOn(":backend:build")
