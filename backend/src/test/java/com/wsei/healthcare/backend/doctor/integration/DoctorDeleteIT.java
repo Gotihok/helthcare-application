@@ -8,28 +8,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DoctorDeleteIT extends AbstractDoctorIT {
 
     @Test
-    public void deleteAuthenticatedPatientProfile_shouldDeleteProfile_whenPatientExists() throws Exception {
-        // Create a patient profile
+    public void deleteAuthenticatedDoctorProfile_shouldDeleteProfile_whenDoctorExists() throws Exception {
+        // Create a doctor profile
         doctorWebHelper.performDoctorProfileRegister(
                 DoctorCreationRequestBuilder.getValidDefault().build(),
                 token
         ).andExpect(status().isOk());
 
-        // Assure the patient profile exists
+        // Assure the doctor profile exists
         doctorWebHelper.performDoctorProfileRetrieve(token)
                         .andExpect(status().isOk());
 
-        // Delete the patient profile
+        // Delete the doctor profile
         doctorWebHelper.performDoctorProfileDelete(token)
                 .andExpect(status().isNoContent());
 
-        // Assure the patient profile doesn't exist
+        // Assure the doctor profile doesn't exist
         doctorWebHelper.performDoctorProfileRetrieve(token)
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteAuthenticatedPatientProfile_shouldReturnNotFound_whenPatientDoesNotExist() throws Exception {
+    public void deleteAuthenticatedDoctorProfile_shouldReturnNotFound_whenDoctorDoesNotExist() throws Exception {
         doctorWebHelper.performDoctorProfileDelete(token)
                 .andExpect(status().isNotFound());
     }

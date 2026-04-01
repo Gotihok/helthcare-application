@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.patient.application;
 
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
+import com.wsei.healthcare.backend.doctor.api.DoctorApi;
 import com.wsei.healthcare.backend.doctor.application.DoctorNotFoundException;
 import com.wsei.healthcare.backend.patient.api.PatientDetailsResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
@@ -17,7 +17,7 @@ public class PatientOrchestrationServiceImpl implements PatientOrchestrationServ
 
     private final PatientMapper patientMapper;
     private final UserApi userApi;
-    private final DoctorPublicApi doctorPublicApi;
+    private final DoctorApi doctorApi;
 
     //TODO: change to be retrieving info by domains (all needed users and doctors)
     //      and to be composing the answer from those retrieved entities.
@@ -32,7 +32,7 @@ public class PatientOrchestrationServiceImpl implements PatientOrchestrationServ
         //TODO: make helper method to create optional responses with NotFoundEx processing
         DoctorProfileResponse doctorDto;
         try {
-            doctorDto = doctorPublicApi.getDoctorProfileByUserId(patient.getUserId());
+            doctorDto = doctorApi.getDoctorProfileByUserId(patient.getUserId());
         } catch (DoctorNotFoundException e) {
             doctorDto = null;
         }

@@ -3,7 +3,7 @@ package com.wsei.healthcare.backend.doctor.application;
 import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
+import com.wsei.healthcare.backend.doctor.api.DoctorApi;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.doctor.domain.DoctorRepository;
 import com.wsei.healthcare.backend.patient.api.PatientInnerApi;
@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DoctorPublicFacade implements DoctorPublicApi {
+public class DoctorFacade implements DoctorApi {
 
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
     private final PatientInnerApi patientInnerApi;
+    private final DoctorOrchestrationService orchestrator;
 
     @Override
     public DoctorProfileResponse createDoctorProfile(Long userId, DoctorCreationRequest request) {
@@ -28,7 +29,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
         newDoctor.setUserId(userId);
 
         Doctor savedDoctor = doctorRepository.save(newDoctor);
-        return doctorMapper.toProfileDto(savedDoctor);
+        return orchestrator.buildDoctorProfile(savedDoctor);
     }
 
     @Override
@@ -38,33 +39,36 @@ public class DoctorPublicFacade implements DoctorPublicApi {
         Doctor updatedDoctor = doctorMapper.toEntity(oldDoctorEntity, request);
 
         Doctor savedDoctor = doctorRepository.save(updatedDoctor);
-        return doctorMapper.toProfileDto(savedDoctor);
+        return orchestrator.buildDoctorProfile(savedDoctor);
     }
 
     @Override
     public DoctorProfileResponse getDoctorProfileByUserId(Long userId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
-        return doctorMapper.toProfileDto(doctor);
+        return orchestrator.buildDoctorProfile(doctor);
     }
 
-    ///TODO: implement
     @Override
     public void deleteDoctorProfileByUserId(Long userId) {
-        throw new NotImplementedException("Doctor deletion is not implemented yet");
+        Doctor doctor = doctorRepository.findByUserId(userId)
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
+        doctorRepository.deleteById(doctor.getId());
     }
 
     @Override
-    public void addPatientForDoctor(Long userId, Long patientId) {
+    public DoctorProfileResponse addPatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
         patientInnerApi.setPersonalDoctorByPatientId(patientId, doctor.getId());
+        return orchestrator.buildDoctorProfile(doctor);
     }
 
     @Override
-    public void removePatientForDoctor(Long userId, Long patientId) {
+    public DoctorProfileResponse removePatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
         patientInnerApi.removePersonalDoctorByPatientId(patientId, doctor.getId());
+        return orchestrator.buildDoctorProfile(doctor);
     }
 }

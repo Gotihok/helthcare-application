@@ -4,7 +4,7 @@ import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
 import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
+import com.wsei.healthcare.backend.doctor.api.DoctorApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorController {
 
-    private final DoctorPublicApi doctorPublicApi;
+    private final DoctorApi doctorApi;
 
     //TODO: add role guard or other security mechanism to prevent unauthorized users from registering as doctors
     @PostMapping("/me/register")
@@ -26,7 +26,7 @@ public class DoctorController {
             @RequestBody DoctorCreationRequest request
     ) {
         return ResponseEntity.ok(
-                doctorPublicApi.createDoctorProfile(userPrincipal.getUserId(), request)
+                doctorApi.createDoctorProfile(userPrincipal.getUserId(), request)
         );
     }
 
@@ -36,7 +36,7 @@ public class DoctorController {
             @RequestBody DoctorProfileUpdateRequest request
     ) {
         return ResponseEntity.ok(
-                doctorPublicApi.updateDoctorProfile(userPrincipal.getUserId(), request)
+                doctorApi.updateDoctorProfile(userPrincipal.getUserId(), request)
         );
     }
 
@@ -45,7 +45,7 @@ public class DoctorController {
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         return ResponseEntity.ok(
-                doctorPublicApi.getDoctorProfileByUserId(userPrincipal.getUserId())
+                doctorApi.getDoctorProfileByUserId(userPrincipal.getUserId())
         );
     }
 
@@ -53,28 +53,30 @@ public class DoctorController {
     public ResponseEntity<DoctorProfileResponse> deleteAuthenticatedDoctorProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        doctorPublicApi.deleteDoctorProfileByUserId(userPrincipal.getUserId());
+        doctorApi.deleteDoctorProfileByUserId(userPrincipal.getUserId());
         return ResponseEntity.noContent().build();
     }
 
     ///TODO: possibly change to return profile
     @PostMapping("/me/patients/{patientId}")
-    public ResponseEntity<Void> addPatient(
+    public ResponseEntity<DoctorProfileResponse> addPatient(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long patientId
     ) {
-        doctorPublicApi.addPatientForDoctor(userPrincipal.getUserId(), patientId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(
+                doctorApi.addPatientForDoctor(userPrincipal.getUserId(), patientId)
+        );
     }
 
     ///TODO: possibly change to return profile
     @DeleteMapping("/me/patients/{patientId}")
-    public ResponseEntity<Void> removePatient(
+    public ResponseEntity<DoctorProfileResponse> removePatient(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long patientId
     ) {
-        doctorPublicApi.removePatientForDoctor(userPrincipal.getUserId(), patientId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(
+                doctorApi.removePatientForDoctor(userPrincipal.getUserId(), patientId)
+        );
     }
 
     //TODO: add all (paginated) prescriptions retrieval or maybe just return it in DoctorProfileResponse
