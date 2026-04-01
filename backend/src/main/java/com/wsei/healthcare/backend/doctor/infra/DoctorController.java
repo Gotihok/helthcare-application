@@ -30,7 +30,7 @@ public class DoctorController {
         );
     }
 
-    @PostMapping("/me")
+    @PostMapping("/me/update")
     public ResponseEntity<DoctorProfileResponse> updateAuthenticatedDoctorProfile(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestBody DoctorProfileUpdateRequest request
