@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.auth.integration;
 
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
-import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +15,7 @@ public class AuthTokenLifecycleIT extends AbstractAuthIT {
         authWebHelper.shouldReject("no_token_generated");
 
         // 2. Register & auth for the token
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isOk());
         String token = authWebHelper.getToken(
                 authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())

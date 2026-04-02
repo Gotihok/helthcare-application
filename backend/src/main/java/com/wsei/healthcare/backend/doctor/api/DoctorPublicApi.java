@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.doctor.api;
 
-public interface DoctorApi {
+public interface DoctorPublicApi {
     DoctorProfileResponse createDoctorProfile(Long userId, DoctorCreationRequest request);
 
     DoctorProfileResponse updateDoctorProfile(Long userId, DoctorProfileUpdateRequest request);

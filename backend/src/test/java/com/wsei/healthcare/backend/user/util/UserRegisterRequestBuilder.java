@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Setter
 @Accessors(chain = true)
-public class RegisterRequestBuilder {
+public class UserRegisterRequestBuilder {
 
     private String firstName;
     private String lastName;
@@ -17,10 +17,10 @@ public class RegisterRequestBuilder {
     private String phoneNumber;
     private LocalDate birthDate;
 
-    private RegisterRequestBuilder() {}
+    private UserRegisterRequestBuilder() {}
 
-    public static RegisterRequestBuilder getValidDefault() {
-        RegisterRequestBuilder builder = new RegisterRequestBuilder();
+    public static UserRegisterRequestBuilder getValidDefault() {
+        UserRegisterRequestBuilder builder = new UserRegisterRequestBuilder();
         builder.firstName = UserTestDataProvider.validFirstName();
         builder.lastName = UserTestDataProvider.validLastName();
         builder.email = UserTestDataProvider.validEmail();
@@ -30,8 +30,8 @@ public class RegisterRequestBuilder {
         return builder;
     }
 
-    public static RegisterRequestBuilder getInvalidDefault() {
-        RegisterRequestBuilder builder = new RegisterRequestBuilder();
+    public static UserRegisterRequestBuilder getInvalidDefault() {
+        UserRegisterRequestBuilder builder = new UserRegisterRequestBuilder();
         builder.firstName = UserTestDataProvider.invalidFirstName();
         builder.lastName = UserTestDataProvider.invalidLastName();
         builder.email = UserTestDataProvider.invalidEmail();

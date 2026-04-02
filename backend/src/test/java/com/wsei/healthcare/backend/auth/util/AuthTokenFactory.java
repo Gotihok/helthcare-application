@@ -1,6 +1,7 @@
 package com.wsei.healthcare.backend.auth.util;
 
-import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.user.api.UserRegisterRequest;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import com.wsei.healthcare.backend.user.util.UserWebHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,12 @@ public final class AuthTokenFactory {
     private final UserWebHelper userWebHelper;
 
     // Base user registration and auth with token retrieval
-    public String createAuthenticatedUserToken() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+    public String createDefaultAuthenticatedUserToken() throws Exception {
+        return createAuthenticatedUserToken(UserRegisterRequestBuilder.getValidDefault().build());
+    }
+
+    public String createAuthenticatedUserToken(UserRegisterRequest request) throws Exception {
+        userWebHelper.performRegister(request)
                 .andExpect(status().isOk());
         return authWebHelper.getToken(
                 authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())

@@ -12,7 +12,7 @@ public abstract class AbstractDoctorIT extends AbstractIntegrationalTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        token = authTokenFactory.createAuthenticatedUserToken();
+        token = authTokenFactory.createDefaultAuthenticatedUserToken();
     }
 
     @Autowired

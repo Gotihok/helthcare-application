@@ -25,7 +25,7 @@ public class UserWebHelper {
 
     // Create user
     public void createDefaultUser() throws Exception {
-        performRegister(RegisterRequestBuilder.getValidDefault().build());
+        performRegister(UserRegisterRequestBuilder.getValidDefault().build());
     }
 
     // User helper methods

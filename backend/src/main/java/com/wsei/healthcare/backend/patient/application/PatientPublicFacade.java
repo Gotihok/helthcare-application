@@ -1,5 +1,6 @@
 package com.wsei.healthcare.backend.patient.application;
 
+import com.wsei.healthcare.backend.doctor.api.DoctorInnerApi;
 import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
@@ -18,6 +19,7 @@ public class PatientPublicFacade implements PatientPublicApi {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
     private final PatientOrchestrationService orchestrator;
+    private final DoctorInnerApi doctorInnerApi;
 
     @Override
     public PatientProfileResponse createPatientProfile(Long userId, PatientCreationRequest request) {
@@ -55,12 +57,14 @@ public class PatientPublicFacade implements PatientPublicApi {
         patientRepository.deleteById(patient.getId());
     }
 
-    //TODO: extract boilerplate
     @Override
     public PatientProfileResponse setPersonalDoctorByUserId(Long userId, Long doctorId) {
+        //TODO: make doctorId validation
         Patient patient = patientRepository.findByUserId(userId)
                 .orElseThrow(() -> new PatientNotFoundException("Patient not found by id"));
 
+        if (!doctorInnerApi.existsById(doctorId))
+            throw new InvalidPersonalDoctorReferenceException("Doctor not found by id: " + doctorId);
         patient.setPersonalDoctorId(doctorId);
         Patient savedPatient = patientRepository.save(patient);
 

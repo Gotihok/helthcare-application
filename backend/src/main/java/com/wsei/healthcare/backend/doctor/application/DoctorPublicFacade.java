@@ -3,17 +3,16 @@ package com.wsei.healthcare.backend.doctor.application;
 import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorApi;
+import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.doctor.domain.DoctorRepository;
 import com.wsei.healthcare.backend.patient.api.PatientInnerApi;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DoctorFacade implements DoctorApi {
+public class DoctorPublicFacade implements DoctorPublicApi {
 
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;

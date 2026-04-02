@@ -4,7 +4,6 @@ import com.wsei.healthcare.backend.doctor.api.DoctorDetailsResponse;
 import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
-import com.wsei.healthcare.backend.patient.api.PatientPublicApi;
 import com.wsei.healthcare.backend.user.api.UserApi;
 import com.wsei.healthcare.backend.user.api.UserResponse;
 import lombok.RequiredArgsConstructor;

@@ -23,7 +23,9 @@ public class DoctorMapper {
 
     //TODO: implement properly
     public DoctorDetailsResponse toDto(Doctor entity) {
-        return new DoctorDetailsResponse();
+        return new DoctorDetailsResponse(
+                entity.getId()
+        );
     }
 
     //TODO: implement properly
