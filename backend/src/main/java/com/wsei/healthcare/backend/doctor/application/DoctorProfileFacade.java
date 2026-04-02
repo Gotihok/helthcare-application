@@ -1,9 +1,9 @@
 package com.wsei.healthcare.backend.doctor.application;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
+import com.wsei.healthcare.backend.doctor.api.DoctorProfileApi;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorCreationRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileUpdateRequest;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.doctor.domain.DoctorRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DoctorPublicFacade implements DoctorPublicApi {
+public class DoctorProfileFacade implements DoctorProfileApi {
 
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
@@ -68,7 +68,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
     public DoctorProfileResponse removePatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
-//        doctorAssignmentManagementApi.removePersonalDoctorByUserId(patientId, doctor.getId());
+//        doctorAssignmentManagementApi.removeAssignment(patientId, doctor.getId());
         return orchestrator.buildDoctorProfile(doctor);
     }
 }

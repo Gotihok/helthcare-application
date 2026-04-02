@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.doctor.integration;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.util.DoctorCreationRequestBuilder;
 import org.junit.jupiter.api.Test;
 

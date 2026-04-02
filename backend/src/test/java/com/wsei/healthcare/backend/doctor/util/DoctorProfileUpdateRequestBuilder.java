@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.doctor.util;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileUpdateRequest;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 

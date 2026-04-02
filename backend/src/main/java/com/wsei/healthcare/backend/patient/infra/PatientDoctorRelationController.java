@@ -1,7 +1,8 @@
 package com.wsei.healthcare.backend.patient.infra;
 
 import com.wsei.healthcare.backend.auth.infra.security.UserPrincipal;
-import com.wsei.healthcare.backend.patient.api.PatientDoctorRelationApi;
+import com.wsei.healthcare.backend.patient.api.DoctorAssignmentApi;
+import com.wsei.healthcare.backend.patient.api.OutgoingDoctorRequestApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PatientDoctorRelationController {
 
-    private final PatientDoctorRelationApi patientDoctorRelationApi;
+    private final OutgoingDoctorRequestApi outgoingDoctorRequestApi;
+    private final DoctorAssignmentApi doctorAssignmentApi;
 
     //TODO: maybe add some return value with info about posted assignment request
     @PostMapping("/me/doctor/{doctorId}")
@@ -20,7 +22,7 @@ public class PatientDoctorRelationController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long doctorId
     ) {
-        patientDoctorRelationApi.postPersonalDoctorAssignmentRequestByUserId(
+        outgoingDoctorRequestApi.sendRequest(
                 userPrincipal.getUserId(),
                 doctorId
         );
@@ -31,7 +33,7 @@ public class PatientDoctorRelationController {
     public ResponseEntity<Void> removePersonalDoctor(
             @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        patientDoctorRelationApi.removePersonalDoctorByUserId(
+        doctorAssignmentApi.removeAssignment(
                 userPrincipal.getUserId()
         );
         return ResponseEntity.ok().build();
@@ -43,7 +45,7 @@ public class PatientDoctorRelationController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long assignmentRequestId
     ) {
-        patientDoctorRelationApi.acceptPersonalDoctorAssignmentRequestByUserId(
+        doctorAssignmentApi.acceptRequest(
                 userPrincipal.getUserId(),
                 assignmentRequestId
         );
@@ -56,7 +58,7 @@ public class PatientDoctorRelationController {
             @AuthenticationPrincipal UserPrincipal userPrincipal,
             @PathVariable Long assignmentRequestId
     ) {
-        patientDoctorRelationApi.rejectPersonalDoctorAssignmentRequestByUserId(
+        doctorAssignmentApi.rejectRequest(
                 userPrincipal.getUserId(),
                 assignmentRequestId
         );

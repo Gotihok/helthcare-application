@@ -1,8 +1,8 @@
 package com.wsei.healthcare.backend.doctor.util;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorCreationRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

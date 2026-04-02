@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
+//TODO: inline with service and move to application
 @Component
 @RequiredArgsConstructor
 public class AuthFacade implements AuthApi {

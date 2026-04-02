@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.doctor.application;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorDetailsResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorDetailsResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileResponse;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.patient.api.dto.PatientProfileResponse;
 import com.wsei.healthcare.backend.user.api.UserApi;

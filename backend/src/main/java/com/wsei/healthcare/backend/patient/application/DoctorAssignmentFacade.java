@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.patient.application;
 
-import com.wsei.healthcare.backend.patient.api.PatientDoctorRelationApi;
+import com.wsei.healthcare.backend.patient.api.DoctorAssignmentApi;
 import com.wsei.healthcare.backend.patient.api.event.PersonalDoctorRemovedEvent;
 import com.wsei.healthcare.backend.patient.domain.DoctorAssignmentRequest;
 import com.wsei.healthcare.backend.patient.domain.Patient;
@@ -13,19 +13,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-//TODO: check for transactions needed
 @Service
 @RequiredArgsConstructor
-public class PatientDoctorRelationFacade implements PatientDoctorRelationApi {
+public class DoctorAssignmentFacade implements DoctorAssignmentApi {
 
     private final PatientRepository patientRepository;
     private final PatientRequestRepository patientRequestRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
-    public void postPersonalDoctorAssignmentRequestByUserId(Long userId, Long doctorId) {
-        Patient patient = patientRepository.findByUserId(userId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + userId));
+    public void requestAssignment(Long actorId, Long doctorId) {
+        Patient patient = patientRepository.findByUserId(actorId)
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + actorId));
 
         DoctorAssignmentRequest doctorAssignmentRequest = new DoctorAssignmentRequest()
                 .setPatientId(patient.getId())
@@ -37,9 +36,9 @@ public class PatientDoctorRelationFacade implements PatientDoctorRelationApi {
     }
 
     @Override
-    public void removePersonalDoctorByUserId(Long userId) {
-        Patient retrievedPatient = patientRepository.findByUserId(userId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + userId));
+    public void removeAssignment(Long actorId) {
+        Patient retrievedPatient = patientRepository.findByUserId(actorId)
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + actorId));
         Long removedDoctorId = retrievedPatient.getPersonalDoctorId();
         retrievedPatient.setPersonalDoctorId(null);
         Patient savedPatient = patientRepository.save(retrievedPatient);
@@ -53,9 +52,9 @@ public class PatientDoctorRelationFacade implements PatientDoctorRelationApi {
     }
 
     @Override
-    public void acceptPersonalDoctorAssignmentRequestByUserId(Long userId, Long requestId) {
-        Patient patient = patientRepository.findByUserId(userId)
-                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + userId));
+    public void acceptRequest(Long actorId, Long requestId) {
+        Patient patient = patientRepository.findByUserId(actorId)
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + actorId));
         DoctorAssignmentRequest doctorAssignmentRequest = patientRequestRepository.findById(requestId)
                 .orElseThrow(() -> new DoctorAssignmentRequestNotFoundException(
                         "Doctor assignment request not found with id: " + requestId));
@@ -70,7 +69,7 @@ public class PatientDoctorRelationFacade implements PatientDoctorRelationApi {
     }
 
     @Override
-    public void rejectPersonalDoctorAssignmentRequestByUserId(Long userId, Long requestId) {
+    public void rejectRequest(Long actorId, Long requestId) {
         DoctorAssignmentRequest doctorAssignmentRequest = patientRequestRepository.findById(requestId)
                 .orElseThrow(() -> new DoctorAssignmentRequestNotFoundException(
                         "Doctor assignment request not found with id: " + requestId));
