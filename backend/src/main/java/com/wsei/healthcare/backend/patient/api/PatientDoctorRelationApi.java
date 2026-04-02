@@ -4,7 +4,7 @@ public interface PatientDoctorRelationApi {
 
     void postPersonalDoctorAssignmentRequestByUserId(Long userId, Long doctorId);
 
-    void removePersonalDoctorByUserId(Long userId, Long doctorId);
+    void removePersonalDoctorByUserId(Long userId);
 
     void acceptPersonalDoctorAssignmentRequestByUserId(Long userId, Long requestId);
 

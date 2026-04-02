@@ -6,7 +6,6 @@ import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
 import com.wsei.healthcare.backend.doctor.api.DoctorPublicApi;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.doctor.domain.DoctorRepository;
-import com.wsei.healthcare.backend.patient.api.PatientInnerApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
 
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
-    private final PatientInnerApi patientInnerApi;
+//    private final DoctorAssignmentManagementApi doctorAssignmentManagementApi;
     private final DoctorOrchestrationService orchestrator;
 
     @Override
@@ -60,7 +59,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
     public DoctorProfileResponse addPatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
-        patientInnerApi.setPersonalDoctorByPatientId(patientId, doctor.getId());
+//        doctorAssignmentManagementApi.setPersonalDoctorByUserId(patientId, doctor.getId());
         return orchestrator.buildDoctorProfile(doctor);
     }
 
@@ -69,7 +68,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
     public DoctorProfileResponse removePatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor not found by id"));
-        patientInnerApi.removePersonalDoctorByPatientId(patientId, doctor.getId());
+//        doctorAssignmentManagementApi.removePersonalDoctorByUserId(patientId, doctor.getId());
         return orchestrator.buildDoctorProfile(doctor);
     }
 }

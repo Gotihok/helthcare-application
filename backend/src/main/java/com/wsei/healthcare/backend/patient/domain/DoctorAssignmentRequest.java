@@ -2,9 +2,14 @@ package com.wsei.healthcare.backend.patient.domain;
 
 import com.wsei.healthcare.backend.shared.enums.RequestStatus;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.Instant;
 
+//TODO: consider relation with the Patient
+@Data
+@Accessors(chain = true)
 @Entity
 @Table(name = "doctor_assignment_requests")
 public class DoctorAssignmentRequest {

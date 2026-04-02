@@ -9,7 +9,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none # TODO: change back to validate
+      ddl-auto: validate
 
 # Configuration for open-api docs
 springdoc:

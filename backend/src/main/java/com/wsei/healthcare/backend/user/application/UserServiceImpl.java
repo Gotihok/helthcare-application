@@ -52,8 +52,7 @@ public class UserServiceImpl implements UserService {
                         this,
                         saved.getId(),
                         request.newEmail()
-                )
-        );
+                ));
 
         return userMapper.toDto(saved);
     }

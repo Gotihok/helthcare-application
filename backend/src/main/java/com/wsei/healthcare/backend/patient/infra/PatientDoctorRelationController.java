@@ -27,14 +27,12 @@ public class PatientDoctorRelationController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/me/doctor/{doctorId}")
+    @DeleteMapping("/me/doctor")
     public ResponseEntity<Void> removePersonalDoctor(
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @PathVariable Long doctorId
+            @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         patientDoctorRelationApi.removePersonalDoctorByUserId(
-                userPrincipal.getUserId(),
-                doctorId
+                userPrincipal.getUserId()
         );
         return ResponseEntity.ok().build();
     }
