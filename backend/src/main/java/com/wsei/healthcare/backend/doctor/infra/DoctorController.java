@@ -57,7 +57,6 @@ public class DoctorController {
         return ResponseEntity.noContent().build();
     }
 
-    ///TODO: possibly change to return profile
     @PostMapping("/me/patients/{patientId}")
     public ResponseEntity<DoctorProfileResponse> addPatient(
             @AuthenticationPrincipal UserPrincipal userPrincipal,
@@ -68,7 +67,6 @@ public class DoctorController {
         );
     }
 
-    ///TODO: possibly change to return profile
     @DeleteMapping("/me/patients/{patientId}")
     public ResponseEntity<DoctorProfileResponse> removePatient(
             @AuthenticationPrincipal UserPrincipal userPrincipal,

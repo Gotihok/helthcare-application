@@ -1,6 +1,6 @@
 package com.wsei.healthcare.backend.patient.integration;
 
-import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
+import com.wsei.healthcare.backend.patient.api.dto.PatientProfileResponse;
 import com.wsei.healthcare.backend.patient.util.PatientCreationRequestBuilder;
 import org.junit.jupiter.api.Test;
 

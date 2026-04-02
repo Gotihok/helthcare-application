@@ -1,8 +1,8 @@
 package com.wsei.healthcare.backend.user.integration;
 
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
-import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import com.wsei.healthcare.backend.user.util.UserEmailUpdateRequestBuilder;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import com.wsei.healthcare.backend.user.util.UserTestDataProvider;
 import org.junit.jupiter.api.Test;
 

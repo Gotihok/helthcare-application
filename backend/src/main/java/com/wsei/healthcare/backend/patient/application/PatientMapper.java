@@ -1,9 +1,9 @@
 package com.wsei.healthcare.backend.patient.application;
 
 import com.wsei.healthcare.backend.doctor.application.DoctorMapper;
-import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
-import com.wsei.healthcare.backend.patient.api.PatientDetailsResponse;
-import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
+import com.wsei.healthcare.backend.patient.api.dto.PatientCreationRequest;
+import com.wsei.healthcare.backend.patient.api.dto.PatientDetailsResponse;
+import com.wsei.healthcare.backend.patient.api.dto.PatientProfileUpdateRequest;
 import com.wsei.healthcare.backend.patient.domain.Patient;
 import com.wsei.healthcare.backend.user.application.UserMapper;
 import lombok.RequiredArgsConstructor;

@@ -9,7 +9,6 @@ public interface DoctorPublicApi {
 
     void deleteDoctorProfileByUserId(Long userId);
 
-    //TODO: make to be returning profile response or move to inner
     DoctorProfileResponse addPatientForDoctor(Long userId, Long patientId);
 
     DoctorProfileResponse removePatientForDoctor(Long userId, Long patientId);

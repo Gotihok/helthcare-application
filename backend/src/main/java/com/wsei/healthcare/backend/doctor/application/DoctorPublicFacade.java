@@ -55,6 +55,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
         doctorRepository.deleteById(doctor.getId());
     }
 
+    //TODO: make through the patient confirmation, not direct change
     @Override
     public DoctorProfileResponse addPatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)
@@ -63,6 +64,7 @@ public class DoctorPublicFacade implements DoctorPublicApi {
         return orchestrator.buildDoctorProfile(doctor);
     }
 
+    //TODO: make through the patient confirmation, not direct change
     @Override
     public DoctorProfileResponse removePatientForDoctor(Long userId, Long patientId) {
         Doctor doctor = doctorRepository.findByUserId(userId)

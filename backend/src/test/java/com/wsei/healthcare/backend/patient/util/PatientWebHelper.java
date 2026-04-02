@@ -1,8 +1,8 @@
 package com.wsei.healthcare.backend.patient.util;
 
-import com.wsei.healthcare.backend.patient.api.PatientCreationRequest;
-import com.wsei.healthcare.backend.patient.api.PatientProfileResponse;
-import com.wsei.healthcare.backend.patient.api.PatientProfileUpdateRequest;
+import com.wsei.healthcare.backend.patient.api.dto.PatientCreationRequest;
+import com.wsei.healthcare.backend.patient.api.dto.PatientProfileResponse;
+import com.wsei.healthcare.backend.patient.api.dto.PatientProfileUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -64,9 +64,9 @@ public class PatientWebHelper {
                 .header("Authorization", "Bearer " + token));
     }
 
-    public ResultActions performPersonalDoctorAssignment(String token, Long doctorId) throws Exception {
-        return mockMvc.perform(post(PATIENT_DOCTOR_ASSIGNMENT_URL, doctorId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + token));
-    }
+//    public ResultActions performPersonalDoctorAssignment(String token, Long doctorId) throws Exception {
+//        return mockMvc.perform(post(PATIENT_DOCTOR_ASSIGNMENT_URL, doctorId)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .header("Authorization", "Bearer " + token));
+//    }
 }
