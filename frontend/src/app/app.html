@@ -1,6 +1,13 @@
-<!--TODO: remove the test header when any content added-->
-<h1>test header for app.html</h1>
+<nav class="navbar" *ngIf="authUser?.isAuthenticated">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <h2>Healthcare App</h2>
+    </div>
+    <div class="navbar-menu">
+      <span class="navbar-user">{{ authUser?.email }}</span>
+      <button class="btn btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>
 
-<app-test></app-test>
-
-<router-outlet />
+<router-outlet></router-outlet>
