@@ -1,14 +1,19 @@
 package com.wsei.healthcare.backend.auth.integration;
 
 import com.wsei.healthcare.backend.auth.domain.AuthIdentity;
+import com.wsei.healthcare.backend.auth.domain.AuthIdentityRepository;
 import com.wsei.healthcare.backend.auth.util.AuthTestDataProvider;
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
-import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginIT extends AbstractAuthIT {
+
+    @Autowired
+    protected AuthIdentityRepository authIdentityRepository;
 
     @Test
     void login_shouldAuthenticateUser_whenValidCredentials() throws Exception {
@@ -45,7 +50,7 @@ public class LoginIT extends AbstractAuthIT {
 
     @Test
     void login_shouldReturnForbidden_whenAccountDisabled() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build());
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build());
         AuthIdentity identity = authIdentityRepository.findAuthIdentityByEmail(AuthTestDataProvider.validEmail())
                 .orElseThrow(() -> new RuntimeException("Identity is not created"));
         identity.setEnabled(false);
@@ -57,7 +62,7 @@ public class LoginIT extends AbstractAuthIT {
 
     @Test
     void login_shouldReturnForbidden_whenAccountLocked() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build());
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build());
         AuthIdentity identity = authIdentityRepository.findAuthIdentityByEmail(AuthTestDataProvider.validEmail())
                 .orElseThrow(() -> new RuntimeException("Identity is not created"));
         identity.setAccountNonLocked(false);

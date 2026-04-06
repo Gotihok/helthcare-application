@@ -1,7 +1,7 @@
 package com.wsei.healthcare.backend.user.integration;
 
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
-import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -10,7 +10,7 @@ public class RegisterIT extends AbstractUserIT {
 
     @Test
     void register_shouldRegisterUser_whenValidCredentials() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isOk());
         String jwt = authWebHelper.getToken(
                 authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())
@@ -21,7 +21,7 @@ public class RegisterIT extends AbstractUserIT {
 
     @Test
     void register_shouldReturnBadRequest_whenDtoValidationFails() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getInvalidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getInvalidDefault().build())
                 .andExpect(status().isBadRequest());
     }
 
@@ -29,7 +29,7 @@ public class RegisterIT extends AbstractUserIT {
     void register_shouldReturnConflict_whenUserAlreadyExists() throws Exception {
         userWebHelper.createDefaultUser();
 
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isConflict());
     }
 }

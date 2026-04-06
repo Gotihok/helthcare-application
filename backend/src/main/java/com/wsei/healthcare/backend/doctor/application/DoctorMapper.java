@@ -1,9 +1,9 @@
 package com.wsei.healthcare.backend.doctor.application;
 
-import com.wsei.healthcare.backend.doctor.api.DoctorCreationRequest;
-import com.wsei.healthcare.backend.doctor.api.DoctorDetailsResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileResponse;
-import com.wsei.healthcare.backend.doctor.api.DoctorProfileUpdateRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorCreationRequest;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorDetailsResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileResponse;
+import com.wsei.healthcare.backend.doctor.api.dto.DoctorProfileUpdateRequest;
 import com.wsei.healthcare.backend.doctor.domain.Doctor;
 import com.wsei.healthcare.backend.user.application.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,9 @@ public class DoctorMapper {
 
     //TODO: implement properly
     public DoctorDetailsResponse toDto(Doctor entity) {
-        return new DoctorDetailsResponse();
+        return new DoctorDetailsResponse(
+                entity.getId()
+        );
     }
 
     //TODO: implement properly

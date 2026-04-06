@@ -1,16 +1,16 @@
 package com.wsei.healthcare.backend.shared.integration;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
-import tools.jackson.databind.ObjectMapper;
 
 @Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,7 +34,6 @@ public abstract class AbstractIntegrationalTest {
 
         @Override
         public void stop() {
-            // Do nothing, let the JVM exit stop the container
         }
     }
 
@@ -55,8 +54,20 @@ public abstract class AbstractIntegrationalTest {
     }
 
     @Autowired
-    protected MockMvc mockMvc;
+    private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    protected ObjectMapper objectMapper;
+    @BeforeEach
+    void cleanDatabase() {
+        jdbcTemplate.execute("""
+        DO $$
+        DECLARE
+            r RECORD;
+        BEGIN
+            FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public')
+            LOOP
+                EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' CASCADE';
+            END LOOP;
+        END $$;
+    """);
+    }
 }

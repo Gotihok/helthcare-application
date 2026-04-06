@@ -20,5 +20,5 @@ public class Doctor {
 //    private Set<Long> patientIds = new HashSet<>();
 
     //TODO: add visits info with relations
-    //TODO: add doctor specific info
+    //TODO: add personalDoctor specific info
 }

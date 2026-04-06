@@ -1,8 +1,8 @@
 package com.wsei.healthcare.backend.user.integration;
 
 import com.wsei.healthcare.backend.auth.util.LoginRequestBuilder;
-import com.wsei.healthcare.backend.user.util.RegisterRequestBuilder;
 import com.wsei.healthcare.backend.user.util.UserEmailUpdateRequestBuilder;
+import com.wsei.healthcare.backend.user.util.UserRegisterRequestBuilder;
 import com.wsei.healthcare.backend.user.util.UserTestDataProvider;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class EmailChangeIT extends AbstractUserIT {
 
     @Test
     void shouldAuthenticate_whenEmailChanged() throws Exception {
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isOk());
         String token = authWebHelper.getToken(
                 authWebHelper.performLogin(LoginRequestBuilder.getValidDefault().build())
@@ -45,9 +45,9 @@ public class EmailChangeIT extends AbstractUserIT {
     void shouldReturnForbidden_whenEmailIsNotOwned() throws Exception {
         String secondEmail = UserTestDataProvider.validEmail() + "changed";
 
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().build())
                 .andExpect(status().isOk());
-        userWebHelper.performRegister(RegisterRequestBuilder.getValidDefault().setEmail(secondEmail).build())
+        userWebHelper.performRegister(UserRegisterRequestBuilder.getValidDefault().setEmail(secondEmail).build())
                 .andExpect(status().isOk());
 
         String token = authWebHelper.getToken(
